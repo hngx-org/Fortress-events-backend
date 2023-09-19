@@ -6,12 +6,11 @@ const bodyParser = require("body-parser");
 const config = require("./src/config");
 const { HttpError } = require("http-errors");
 const errorHandler = require("./src/middlewares/errorHandler");
-const { db } = require("./src/config/dbConfig");
+const sequelize = require("./src/config/dbConfig");
 
 
 const app = express();
 
-const { PORT } = config;
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -24,17 +23,27 @@ app.use(cookieParser());
 app.use(HttpError);
 app.use(errorHandler);
 
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET, PUT, POST");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
 // db.sync({ }).then(()=>{
 //     console.log(`Database is connected successfully !`);
 // }).catch((error)=>{
 //     console.log(`Database error at ${error}`)
 // })
 
-const BUILD_PORT = PORT;
+const PORT = process.env.PORT;
 
+app.get('/', (req, res) => {
+    res.json({ ...config })
+})
 
-app.listen(BUILD_PORT || 3000 , () => {
-    console.log(`Event App running on http://localhost:${BUILD_PORT}/`)
+app.listen(PORT || 3000, () => {
+    console.log(`Event App running on http://localhost:${PORT}/`)
 });
 
 
