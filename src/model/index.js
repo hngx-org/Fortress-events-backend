@@ -1,12 +1,13 @@
 const { DataTypes } = require('sequelize');
 
-const { sequelize } = require('../config/sequelize.js')
+const { sequelize } = require('../config/dbConfig')
+
 const { STRING, DATE, UUID, UUIDV4 } = DataTypes
 
 
 const User = sequelize.define('User', {
     id: {
-        type: UUID,
+        type: STRING,
         primaryKey: true,
         defaultValue: UUIDV4,
     },
@@ -21,8 +22,10 @@ const User = sequelize.define('User', {
     },
     avatar: {
         type: STRING,
-        comment: 'URL to the user\'s avatar',
-    },
+    }
+}, {
+    tableName: 'users',
+    modelName: 'users'
 });
 
 const InterestedEvent = sequelize.define('InterestedEvent', {
@@ -40,6 +43,9 @@ const InterestedEvent = sequelize.define('InterestedEvent', {
             key: 'id',
         },
     },
+}, {
+    tableName: 'interested_events',
+    modelName: 'interested_events'
 });
 
 
@@ -58,6 +64,9 @@ const UserGroup = sequelize.define('UserGroup', {
             key: 'id',
         },
     },
+}, {
+    tableName: 'user_groups',
+    modelName: 'user_groups'
 });
 
 
@@ -76,6 +85,9 @@ const GroupEvent = sequelize.define('GroupEvent', {
             key: 'id',
         },
     },
+}, {
+    tableName: 'group_events',
+    modelName: 'group_events'
 });
 
 
@@ -89,6 +101,9 @@ const Group = sequelize.define('Group', {
         type: STRING,
         allowNull: false,
     },
+}, {
+    tableName: 'groups',
+    modelName: 'groups'
 });
 
 const Event = sequelize.define('Event', {
@@ -124,6 +139,9 @@ const Event = sequelize.define('Event', {
         type: STRING,
         comment: 'URL to the thumbnail',
     },
+}, {
+    tableName: 'events',
+    modelName: 'events'
 });
 
 
@@ -135,7 +153,6 @@ const Comment = sequelize.define('Comment', {
     },
     body: {
         type: STRING,
-        comment: 'Text content of the comments',
     },
     user_id: {
         type: UUID,
@@ -151,9 +168,10 @@ const Comment = sequelize.define('Comment', {
             key: 'id',
         },
     },
+}, {
+    tableName: 'comments',
+    modelName: 'comments'
 });
-
-
 
 const Image = sequelize.define('Image', {
     id: {
@@ -162,18 +180,40 @@ const Image = sequelize.define('Image', {
         defaultValue: UUIDV4,
     },
     comment_id: {
-        type: UUID,
-        references: {
-            model: 'Comments',
-            key: 'id',
-        },
+        type: UUID
     },
     image_url: {
         type: STRING,
-        comment: 'URL to the images',
     },
+}, {
+    tableName: 'images',
+    modelName: 'images'
 });
 
+User.belongsToMany(Event, { through: InterestedEvent });
+Event.belongsToMany(User, { through: InterestedEvent });
+
+User.belongsToMany(Group, { through: UserGroup });
+Group.belongsToMany(User, { through: UserGroup });
+
+Group.belongsToMany(Event, { through: GroupEvent });
+Event.belongsToMany(Group, { through: GroupEvent });
+
+Event.belongsTo(User, { foreignKey: 'creator' });
+
+User.hasMany(Comment, { foreignKey: 'user_id' });
+Event.hasMany(Comment, { foreignKey: 'event_id' });
+Comment.hasMany(Image, { foreignKey: 'comment_id' });
+
+
+
+
+sequelize.sync().then(() => {
+    console.log('Database synchronized successfully.');
+})
+    .catch((error) => {
+        console.error('Database synchronization error:', error);
+    });
 
 module.exports = {
     User,
