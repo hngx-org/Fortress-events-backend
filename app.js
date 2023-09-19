@@ -7,6 +7,7 @@ const config = require("./src/config");
 const { HttpError } = require("http-errors");
 const errorHandler = require("./src/middlewares/errorHandler");
 const sequelize = require("./src/config/dbConfig");
+require('./src/model/index')
 
 
 const app = express();
@@ -39,7 +40,7 @@ app.use(function (req, res, next) {
 const PORT = process.env.PORT;
 
 app.get('/', (req, res) => {
-    res.json({ ...config })
+    res.send('i am homer')
 })
 
 app.listen(PORT || 3000, () => {
