@@ -1,0 +1,27 @@
+{
+  "name": "fortress-events-backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/hngx-org/fortress-events-backend.git",
+  "license": "MIT",
+  "scripts": {
+    "start": "node app.js",
+    "build": "nodemon app.js",
+    "dev": "cross-env  NODE_ENV=development nodemon app.js",
+    "prod": "cross-env NODE_ENV=production nodemon app.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "lodash.merge": "^4.6.2",
+    "morgan": "^1.10.0",
+    "mysql": "^2.18.1",
+    "nodemon": "^3.0.1",
+    "sequelize": "^6.33.0",
+    "tedious": "^16.4.0"
+  }
+}
