@@ -8,9 +8,11 @@ const { HttpError } = require("http-errors");
 const errorHandler = require("./src/middlewares/errorHandler");
 const sequelize = require("./src/config/dbConfig");
 require('./src/model/index')
-
+//api route handler
+const router=require(`./src/routes/index.js`)
 
 const app = express();
+
 
 
 app.use(logger('dev'));
@@ -19,6 +21,8 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
+//route handlers
+app.use(`/api`,router)
 
 
 app.use(HttpError);

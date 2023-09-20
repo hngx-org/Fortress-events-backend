@@ -1,7 +1,14 @@
-const { sendErrorResponse } = require("../../utils/constants/response");
+const {
+  sendErrorResponse
+} = require("../../utils/constants/response");
 
 const errorHandler = (err, req, res, next) => {
-  sendErrorResponse(res, 500, err);
+  sendErrorResponse(
+    res,
+    statusCode = res.statusCode ? res.statusCode : 500,
+    err.message
+  );
+  next()
 };
 
 module.exports = errorHandler;

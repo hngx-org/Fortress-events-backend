@@ -15,6 +15,7 @@ const sequelize = new Sequelize(
   DB_PASSWORD,   // db password
   {
     host: DB_HOST,
+    port:3309,
     dialect: 'mysql',
     dialectModule: require('mysql2')
   }
