@@ -5,6 +5,6 @@ const router = express.Router();
 const commentsRouter = require("./comments"); // Import the comments router
 
 // Mount the comments router under /api/comments
-router.use("/api/comments", commentsRouter);
+router.use("/comments", commentsRouter);
 
 module.exports = router;

@@ -5,8 +5,8 @@ const path = require("path");
 const {
   sendSuccessfulResponse,
   sendErrorResponse,
-} = require("../../utils/constants/response");
-const { Comment, Image } = require("../../models"); // Remove CommentImage import
+} = require("../utils/constants/response");
+const { Comment, Image } = require("../model"); // Remove CommentImage import
 
 // Set up multer storage
 const storage = multer.diskStorage({
