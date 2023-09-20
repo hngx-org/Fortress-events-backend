@@ -14,10 +14,10 @@ const createGroup = async (req, res, next) => {
         const {
             title
         } = req.body
-        //title validation
-        if (title === "") {
+        //request validation
+        if (!title || typeof title !== 'string') {
             res.status(400)
-            throw new Error(`invalid request`)
+            throw new Error(`invalid request, title is required and must be a string`)
         }
         //create user group
         const data = await Group.create({
@@ -55,7 +55,7 @@ const deleteGroup = async (req, res, next) => {
             }
         })
         return sendSuccessfulResponse(
-            res, 204, null
+            res, 204, data='deleted successfully'
         )
     } catch (error) {
         next(error)
