@@ -8,7 +8,7 @@ const { HttpError } = require("http-errors");
 const errorHandler = require("./src/middlewares/errorHandler");
 const sequelize = require("./src/config/dbConfig");
 require("./src/model/index");
-const imageRoute = require("./src/routes/imageRoute").default;
+const imageRoute = require("./src/routes/imageRoute");
 
 const app = express();
 
