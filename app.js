@@ -41,7 +41,13 @@ const PORT = process.env.PORT;
 
 app.get('/', (req, res) => {
     res.send('i am homer')
-})
+});
+
+// import routes
+const events_route = require('./src/routes/index');
+
+// use routes
+app.use('/api/event', events_route)
 
 app.listen(PORT || 3000, () => {
     console.log(`Event App running on http://localhost:${PORT}/`)

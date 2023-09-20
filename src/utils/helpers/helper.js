@@ -44,10 +44,16 @@ function handleAsync(callback) {
       success: true
     };
   }
+
+  const formatDateTime = (datetime) => {
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' };
+    return new Date(datetime).toLocaleString(undefined, options);
+};
   
   module.exports = {
     handleAsync,
     handleError,
     handleResponse,
-    createApiError
+    createApiError,
+    formatDateTime
   };
