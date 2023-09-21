@@ -23,9 +23,12 @@ app.use(function (req, res, next) {
   next();
 });
 
-readdirSync("./src/routes").map((path) =>
-  app.use("/api", require(`./src/routes/${path}`))
-);
+readdirSync("./src/routes").map((path) => {
+  if (path !== "auth.js") {
+    app.use("/api", require(`./src/routes/${path}`));
+  }  
+  app.use("/auth", require(`./src/routes/${path}`))
+});
 
 app.use(errorHandlerMiddleware);
 app.use(notFound);
