@@ -334,6 +334,7 @@ Comment.belongsTo(User, { foreignKey: "user_id" });
 // Comment to Image relationship
 Comment.hasMany(CommentImage, { foreignKey: "comment_id" });
 CommentImage.belongsTo(Comment, { foreignKey: "comment_id" });
+
 // EventThumbnail to Image relationship
 EventThumbnail.belongsTo(Image, { foreignKey: "image_id" });
 // Group to User relationship (Many-to-Many)

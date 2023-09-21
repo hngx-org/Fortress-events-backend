@@ -2,7 +2,8 @@
 
 const { NotFoundError } = require("../errors");
 const sequelize = require("sequelize");
-const { Comment, Image } = require("../model");
+const { Comment, CommentImage, Image } = require("../model");
+const e = require("express");
 
 // Function to add an image to a comment
 async function addImageToComment(req, res) {
@@ -45,21 +46,40 @@ async function addImageToComment(req, res) {
 // Function to retrieve an image associated with a comment
 async function getImageForComment(req, res) {
   const commentId = req.params.commentId;
+  console.log("commentId", commentId);
 
   try {
     // Find the comment by ID
     const comment = await Comment.findByPk(commentId);
+    console.log("comment", comment);
+
     if (!comment) {
       throw new NotFoundError("Comment not found");
     }
 
+    // Now, let's find the associated image using a join operation
+    const commentImage = await CommentImage.findOne({
+      where: { commentId },
+      include: [{ model: Image, as: "image" }],
+    });
+
+    // Check if commentImage is null or if the associated image is null
+    if (!commentImage || !commentImage.image) {
+      // Handle the case where no image is found
+      res.status(404).json({ message: "No image found for this comment" });
+      return; // Exit the function
+    }
+
+    // Access the image URL from the associated image
+    const imageUrl = commentImage.image.imageUrl; // Adjust this based on your model structure
+
     // Send the image URL associated with the comment
-    res.status(200).json({ imageUrl: comment.imageUrl });
+    res.status(200).json({ imageUrl });
   } catch (error) {
     console.error("Error retrieving image for comment:", error);
 
-    // Send an error response
-    res.status(404).json({ error: "Comment not found" });
+    // Send an error response for other types of errors
+    res.status(500).json({ error: "Internal server error" });
   }
 }
 
