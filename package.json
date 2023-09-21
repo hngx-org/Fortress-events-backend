@@ -5,7 +5,7 @@
   "repository": "https://github.com/hngx-org/fortress-events-backend.git",
   "license": "MIT",
   "scripts": {
-    "start": "node app.js",
+    "start": "nodemon app.js",
     "build": "nodemon app.js",
     "dev": "nodemon app.js",
     "prod": "cross-env NODE_ENV=production nodemon app.js"
