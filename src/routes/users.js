@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const {getSingleUserProfile} = require('../controllers/users');
+const { updateSignleUserProfile } = require('../controllers/users')
 
-router.route('/users/:id').
-get(getSingleUserProfile);
+
+router.route('/users/:id').put(updateSignleUserProfile)
+
 
 
 module.exports = router;
