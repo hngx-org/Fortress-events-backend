@@ -1,5 +1,7 @@
 # EVENTS APP BACKEND
 
+
+
 Backend for the events mobile app. Built as part of the HNGx Internship by team fortress.
 
 ## 🔧 Tech Stack
@@ -149,3 +151,8 @@ Documentation can be found [here](/)
 ## 🤝 The Team
 
 Built by team fortress. Team members can be found at [AUTHORS](/AUTHORS)
+
+# updating a specific user profile
+![response](updateshot.png)
+
+the above image shows the response after make a put request to the endpoint api/users/:userId
