@@ -78,8 +78,16 @@ async function getImageForComment(req, res) {
   } catch (error) {
     console.error("Error retrieving image for comment:", error);
 
-    // Send an error response for other types of errors
-    res.status(500).json({ error: "Internal server error" });
+    if (error.message.includes("Image is not associated to CommentImage")) {
+      // Handle the specific error message indicating that "Image is not associated with CommentImage."
+      res
+        .status(400)
+        .json({ error: "Image is not associated with CommentImage" });
+    } else {
+      console.error("Error retrieving image for comment:", error);
+      // Send an error response for other types of errors
+      res.status(500).json({ error: "Internal server error" });
+    }
   }
 }
 
