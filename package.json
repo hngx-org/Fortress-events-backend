@@ -23,8 +23,6 @@
     "mysql2": "^3.6.1",
     "nodemon": "^3.0.1",
     "sequelize": "^6.33.0",
-    "swagger-jsdoc": "^6.2.8",
-    "swagger-ui-express": "^5.0.0",
     "tedious": "^16.4.0"
   }
 }
