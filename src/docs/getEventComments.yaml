@@ -1,0 +1,21 @@
+paths: 
+   /api/events/{eventId}/comments: 
+     get: 
+       summary: Retrieves the comments posted by users in a particular event. 
+       description: Reads the attribute of a user  either with a name or an id parameter 
+       parameters: 
+         - in: path 
+           name: eventId
+           schema: 
+             type: integer | string
+           description: Numeric ID or name of the user to get. 
+       tags: 
+         - Comment
+       schema: 
+         $ref: '#/components/schemas/Comment'
+       responses:
+         404:
+           description: Not Found
+         500:
+           description: Internal Server Error 
+ 
