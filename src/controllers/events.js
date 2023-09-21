@@ -22,6 +22,7 @@ const createEvent = handleAsync(async (req, res) => {
     const response = validateEvent(event);
     if (response.error) {
         return res.status(400).json({
+            message: 'Invalid request data.',
             error: response.error.details,
         })
     };
@@ -58,7 +59,8 @@ const createEvent = handleAsync(async (req, res) => {
         }))
     } catch (err) {
         // Handle any errors that occur during event creation or Cloudinary upload
-        return createApiError('Error creating new event', 401);
+        console.error('Error creating new event:', err);
+        return createApiError('Error creating new event', 500);
     }
 });
 
