@@ -1,5 +1,5 @@
 const validator = require("validator");
-const { sendErrorResponse } = require("../utils/constants/response");
+const {sendErrorResponse} = require("../../utils/constants/response")
 
 // Middleware for validating image URLs
 const validateImageUrl = (req, res, next) => {

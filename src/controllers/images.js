@@ -1,5 +1,5 @@
-const { Image, Comment } = require("../model/index"); 
-const upload = require("../config/multerConfig"); 
+const { Image, Comment } = require("../model/index");
+const upload = require("../config/multerConfig");
 
 async function addImageToComment(req, res) {
   try {

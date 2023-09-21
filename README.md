@@ -1,69 +1,66 @@
-<<<<<<< HEAD
-# Team Fortress (Backend)
+# EVENTS APP BACKEND
 
-## Requisites
+Backend for the events mobile app. Built as part of the HNGx Internship by team fortress.
 
-Node and npm
+## 🔧 Tech Stack
 
-## Initial setup 1
+- NodeJS
+- ExpressJS
+- MySQL
 
+## 📝 Requirements
 
+This project requires nodeJS version >= 14 and npm package manager.
 
+## 📁 Project Configuration
 
-Install all modules
+The project is divided into:
 
-npm install
+- Controller: found in `src/controller` folder. Coordinates the interaction between the UI and the backend services.
+- Middlewares: found in `src/middlewares` folder. Logic to process incoming HTTP requests and perform tasks such as authentication, validation, etc.
+- Model: found in `src/model` directory. Database Schema of the events app.
+- Routes: found in `src/routes` directory. URL endpoints and their corresponding method/action.
 
-# SetUp with cloud database
-cp .env_example .env
+## 💻 Running Locally
 
+1. Clone this repository by running:
+   ```bash
+   git https://github.com/hngx-org/Fortress-events-backend
+   cd Fortress-events-backend
+   ```
+2. Install the dependencies:
+   ```bash
+   npm install
+   ```
+3. Using the `.env_sample` template, create a `.env` file and fill in the values for each environment variables.
+4. Start the server in dev mode:
+   ```bash
+   npm run build
+   ```
 
------------------------------------------------------------------------------
------------------------------------------------------------------------------
+## 🗃️ Database SetUp
 
-## Setup local environment variables
+This project uses MySQL for the database. Database Schema can be found in the Documentation section.
+**NOTE**: You need to setup a MySQL instance yourself, the default database name is: `fortress_db`. DB schemas are automatically synced
 
-```
-cp .env_sample .env
-```
+### Installing MySQL
 
-## Database
+- Linux
+  ```bash
+  sudo apt update
+  sudo apt install mysql-server
+  ```
+- Windows
+  Read on the installation process [here](https://dev.mysql.com/downloads/installer/)
 
-You need to setup a MySQL instance yourself, the default database name is: `fortress_db` 
-DB schemas are automatically synced
+### Starting the MySQL Service
 
-
-
-## Easily testing server endpoints
-
-Make use of POSTMAN to test your endpoints extensively
-
-
-
-
-### Install MySQL
-
-
-# Linux Shells
-```sh
-sudo apt update
-sudo apt install mysql-server
-```
-
-
-# Windows (Don't know much about windows so please read on the installation process)
-
-```sh
-Visit https://dev.mysql.com/downloads/installer/
-```
-
-# After Installation(Linux) Start the Mysql service
-
-```sh
+```bash
 sudo systemctl start mysql
-
 sudo mysql
 ```
+
+Then:
 
 ```sql
 CREATE USER 'fortress'@'localhost' IDENTIFIED BY 'f0rtr355';
@@ -75,67 +72,80 @@ FLUSH PRIVILEGES;
 exit
 ```
 
-```
-mysql -u fortress -p (enter)
-#when prompted for password use the password f0rtr355 set above
-```
+## 🌐 Endpoints
 
-```sql
-CREATE DATABASE fortress_db;
-```
+- POST `/api/users/register` -> User registration
+- POST `/api/users/login` -> User login
+- GET `/api/users/profile` -> Get user profile
+- PUT `/api/users/profile` -> Update user profile
+- POST `/api/events` -> Create a new event
+- GET `/api/events` -> Get a list of events
+- GET `/api/events/:eventId` -> Get event details
+- PUT `/api/events/:eventId` -> Update event details
+- DELETE `/api/events/:eventId` -> Delete and event
+- POST `/api/events/:eventId/comments` -> Add a comment to an event
+  GET `/api/events/:eventId/comments` -> Get comments for an event
+- POST `/api/comments/:commentId/images` -> Add an image to a comment
+- GET `/api/comments/:commentId/images` -> Get images for a comment
+- POST `/api/users/:userId/interests/:eventId` -> Express interest in an event
+- DELETE `/api/users/:userId/interests/:eventId` -> Remove interest in an event
+- POST `/api/groups` -> Create a new group
+- GET `/api/groups/:groupId` -> Get group details
+- PUT `/api/groups/:groupId` -> Update group details
+- DELETE `/api/groups/:groupId` -> Delete a group
+- POST `/api/groups/:groupId/members/:userId` -> Add a user to a group
+- DELETE `/api/groups/:groupId/members/:userId` -> Remove a user from a group
 
+## 📩 Requests
 
-----------------------------------------------------------------------------
-----------------------------------------------------------------------------
-## Run the server
+- Accepts JSON only.
+- Request body should **only** contain the specified values and follow the database schema.
+- Example request:
+  ```json
+  {
+    "name": "John Doe"
+  }
+  ```
 
-```
-npm run build
-=======
-# Project Event App
+## 📂 Response
 
-Event App Comment API
+Returns JSON.
 
-folder structure:
+## ⚠️ Response Status
 
-```
+- 200 - OK: User or resource has been successfully updated.
+- 201 - Created: User or resource has been successfully created.
+- 400 - Bad Request:
+  - Request body has more than the specified attribute.
+  - Invalid content-Type.
+- 403 - Unauthorized: A user is not authenticated
+- 404 - User or Resource Not Found.
+- 500 - Internal Server Error.
 
-```
+## 💻 Testing
 
-src folder:
+Tests can be carried out locally by running:
 
-```
-- src
-    - config
-        - dbConfig.js
-        - index.js
-        - dev.js
-        - prod.js
-    - controllers
-        - index.js
-    - middleware
-        - errorHandler
-            - index.js
-    model
-        - index.js
-    - routes
-        - index.js
-    - utils
-        - constants
-            - response.js
-- app.js
-- .env
-- .gitignore
-- package.json
-- README.md
-- package-lock.json
-```
-
-```
-test folder:
+```bash
+npm run test
 ```
 
-```
+Alternatively, online API testing tools such as Postman can be used to test the endpoints.
 
->>>>>>> 52135f9906fc2c5f0f82991111f371c17edd1f59
-```
+## 📄 License
+
+This project uses the MIT License as found in [LICENSE](/LICENSE)
+
+## 📖 Documentation
+
+Documentation can be found [here](/)
+
+## 🔗 Links
+
+[Server URL]()
+
+[Database Schema]()
+
+## 🤝 The Team
+
+Built by team fortress. Team members can be found at [AUTHORS](/AUTHORS)
