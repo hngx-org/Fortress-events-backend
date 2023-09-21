@@ -20,10 +20,6 @@ const getGroupDetails = async (req, res) => {
     }
 };
 
-module.exports = {
-    getGroupDetails,
-}const { Group } = require("../model");
-
 const getGroups = async (req, res) => {
   try {
     const groups = await Group.findAll();
@@ -46,4 +42,4 @@ const createGroup = async (req, res) => {
   }
 };
 
-module.exports = { createGroup, getGroups };
+module.exports = { createGroup, getGroups, getGroupDetails };
