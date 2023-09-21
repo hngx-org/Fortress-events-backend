@@ -9,7 +9,7 @@ const session = require('express-session')
 const sequelize = require("./src/config/dbConfig");
 const notFound = require("./src/middlewares/not-found");
 const swaggerUi = require('swagger-ui-express'); 
-const specs = require('./config/swaggerConfig');
+const specs = require('./swaggerConfig');
 const app = express();
 
 require("dotenv").config();
@@ -56,8 +56,9 @@ app.use(errorHandlerMiddleware);
 app.use(notFound);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
-app.listen(process.env.PORT || 3000, () => {
-  console.log(`Event App running on http://localhost:${PORT}/`);
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Event App Server running at http://localhost:${PORT}/`);
 });
 
 module.exports = app;

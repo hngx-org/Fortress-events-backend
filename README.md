@@ -2,11 +2,25 @@
 
 Backend for the events mobile app. Built as part of the HNGx Internship by team fortress.
 
-## 🔧 Tech Stack
 
-- NodeJS
-- ExpressJS
-- MySQL
+## Table of Contents
+  - [Project Configuration](#project-configuration)
+- [Getting Started](#getting-started-running-the-server)
+  - [Tech Stack](#tech-stack)
+  - [Requirements](#requirements)
+  - [Running Locally](#running-locally)
+  - [Database SetUp](#database-setup) 
+  - [Testing](#testing)
+- [Endpoints](#endpoints) 
+  - [APIs](#apis) 
+  - [Request](#request) 
+  - [Response](#response) 
+  - [Response Status](#response-status) 
+- [License](#license)
+- [Documentation](#documentation)
+- [Links](#links)
+- [The Team](#the-team)
+
 
 ## 📁 Project Configuration
 
@@ -20,7 +34,14 @@ The project is divided into:
 
 - Routes: found in `src/routes` directory. URL endpoints and their corresponding method/action.
 
+
 ## Getting Started: Running the Server
+
+### 🔧 Tech Stack
+
+- NodeJS
+- ExpressJS
+- MySQL
 
 ### 📝 Requirements
 
@@ -90,6 +111,10 @@ Alternatively, online API testing tools such as Postman can be used to test the 
 
 ## 🌐 Endpoints
 
+### APIs
+
+The events app backend provides the following APIs:
+
 - POST `/api/users/register` -> User registration
 - POST `/api/users/login` -> User login
 - GET `/api/users/profile` -> Get user profile
@@ -112,7 +137,9 @@ Alternatively, online API testing tools such as Postman can be used to test the 
 - POST `/api/groups/:groupId/members/:userId` -> Add a user to a group
 - DELETE `/api/groups/:groupId/members/:userId` -> Remove a user from a group
 
-### 📩 Requests
+
+### 📩 Request
+
 - Accepts JSON only.
 - Request body should **only** contain the specified values and follow the database schema.
 - Example request:
@@ -148,9 +175,8 @@ Documentation can be found in `/api-docs` endpoint.
 
 ## 🔗 Links
 
-[Server URL]()
-
-[Database Schema]()
+* [Server URL]()
+* [Database Schema]()
 
 ## 🤝 The Team
 

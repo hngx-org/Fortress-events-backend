@@ -9,7 +9,7 @@ const options = {
       description: 'Documentation for the API endpoint of the Events App by Team Fortress', 
     }, 
   }, 
-  apis: ['../docs/*.yaml'], 
+  apis: ['./src/docs/*.yaml'], 
 }; 
 
 module.exports = swaggerJsdoc(options);
