@@ -5,7 +5,8 @@ const { sequelize } = require('../config/dbConfig')
 const { STRING, DATE, UUID, UUIDV4 } = DataTypes
 
 
-const User = sequelize.define('User', {
+const User = sequelize.define('User',
+    {
     id: {
         type: UUID,
         primaryKey: true,
@@ -145,50 +146,60 @@ const Event = sequelize.define('Event', {
 });
 
 
-const Comment = sequelize.define('Comment', {
+const Comment = sequelize.define(
+  "Comment",
+  {
     id: {
-        type: UUID,
-        primaryKey: true,
-        defaultValue: UUIDV4,
+      type: UUID,
+      primaryKey: true,
+      defaultValue: UUIDV4,
     },
     body: {
-        type: STRING,
+      type: STRING,
     },
     user_id: {
-        type: UUID,
-        references: {
-            model: 'Users',
-            key: 'id',
-        },
+      type: UUID,
+      references: {
+        model: "Users",
+        key: "id",
+      },
     },
     event_id: {
-        type: UUID,
-        references: {
-            model: 'Events',
-            key: 'id',
-        },
+      type: UUID,
+      references: {
+        model: "Events",
+        key: "id",
+      },
     },
-}, {
-    tableName: 'comments',
-    modelName: 'comments'
-});
+  },
+  {
+    tableName: "comments",
+      modelName: "comments",
+    timestamps: false,
+  }
+);
 
-const Image = sequelize.define('Image', {
+const Image = sequelize.define(
+  "Image",
+  {
     id: {
-        type: UUID,
-        primaryKey: true,
-        defaultValue: UUIDV4,
+      type: UUID,
+      primaryKey: true,
+      defaultValue: UUIDV4,
     },
     comment_id: {
-        type: UUID
+      type: UUID,
     },
     image_url: {
-        type: STRING,
+      type: STRING,
     },
-}, {
-    tableName: 'images',
-    modelName: 'images'
-});
+  },
+  {
+    tableName: "images",
+      modelName: "images",
+    timestamps:false,
+  }
+);
 
 User.belongsToMany(Event, { through: InterestedEvent });
 Event.belongsToMany(User, { through: InterestedEvent });

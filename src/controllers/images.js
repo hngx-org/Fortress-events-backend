@@ -15,11 +15,11 @@ async function addImageToComment(req, res) {
 
     // Create a new Image record in the database
     const image = await Image.create({
-      comment_id: commentId,
-      image_url: `/uploads/${filename}`, // Store the relative path to the image
+      Comment: { id: commentId },
+      url: `/uploads/${filename}`, // Store the relative path to the image
     });
 
-    return res.status(201).json(image);
+    return res.status(201).json({message: " Image uploaded successfully ", image});
   } catch (error) {
     console.error("Error adding image to comment:", error);
     return res.status(500).json({ error: "Unable to add image to comment" });
