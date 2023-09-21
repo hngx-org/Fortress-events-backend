@@ -59,7 +59,7 @@ async function getImageForComment(req, res) {
     console.error("Error retrieving image for comment:", error);
 
     // Send an error response
-    res.status(500).json({ error: "Error retrieving image for comment" });
+    res.status(404).json({ error: "Comment not found" });
   }
 }
 

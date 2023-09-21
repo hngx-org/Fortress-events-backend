@@ -40,7 +40,7 @@ app.get("/", (req, res) => {
   res.send("i am homer");
 });
 
-app.listen(PORT || 4000, () => {
+app.listen(PORT || 3000, () => {
   console.log(`Event App running on http://localhost:${PORT}/`);
 });
 
