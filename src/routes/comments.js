@@ -11,6 +11,9 @@ router.post('/events/:eventId/comments', addComment);
 // Get comments for a specific event
 router.get('/events/:eventId/comments', getSingleComment);
 
+//Get all comment
+router.get('/events/:eventId/comments', getComment);
+
 // Update a comment for an event
 router.put('/comments/:commentId', updateComment);
 

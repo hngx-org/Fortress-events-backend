@@ -7,22 +7,22 @@ const { NotFoundError } = require('../errors');
 // add Comments
 const addComment = async (req, res) => {
     try {
-        const eventId = req.params.eventId;
+        const eventId = req.params;
         // the user_id should come from a middleware
-        const { body, user_id } = req.body;
+        const { body } = req.body;
 
-        const eventExist = await Event.findOne({
-            where: { id: id },
-        });
+        // const eventExist = await Event.findOne({
+        //     where: { id: id },
+        // });
 
-        if (!eventExist) {
-            throw new NotFoundError("Event not found");
-        }
+        // if (!eventExist) {
+        //     throw new NotFoundError("Event not found");
+        // }
 
         // Create a new comment using the Comment model
         const newComment = await Comment.create({
             body,
-            user_id,
+            user_id : user2_id,
             event_id: eventId,
         });
 
@@ -50,7 +50,7 @@ const getComment = async (req, res) => {
 // Get comments from an event by Id
 const getSingleComment = async (req, res) => {
     try {
-        const eventId = req.params;
+        const eventId = req.params.eventId;
 
         // Find the event by ID and include associated comments
         const event = await Event.findByPk(eventId, {
