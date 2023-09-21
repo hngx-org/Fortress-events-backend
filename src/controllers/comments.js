@@ -1,5 +1,3 @@
-// commentController.js
-
 const { NotFoundError } = require("../errors");
 const sequelize = require("sequelize");
 const { Comment, CommentImage, Image } = require("../model");
