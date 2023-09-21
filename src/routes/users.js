@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const {getSingleUserProfile} = require('../controllers/users');
 
-router.route('/user/profile/:id').
+router.route('/users/:id').
 get(getSingleUserProfile);
 
 
