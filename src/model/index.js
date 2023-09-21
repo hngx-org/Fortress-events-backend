@@ -33,14 +33,14 @@ const InterestedEvent = sequelize.define('InterestedEvent', {
     user_id: {
         type: UUID,
         references: {
-            model: 'Users',
+            model: 'users',
             key: 'id',
         },
     },
     event_id: {
         type: UUID,
         references: {
-            model: 'Events',
+            model: 'events',
             key: 'id',
         },
     },
@@ -54,14 +54,14 @@ const UserGroup = sequelize.define('UserGroup', {
     user_id: {
         type: UUID,
         references: {
-            model: 'Users',
+            model: 'users',
             key: 'id',
         },
     },
     group_id: {
         type: UUID,
         references: {
-            model: 'Groups',
+            model: 'groups',
             key: 'id',
         },
     },
@@ -75,14 +75,14 @@ const GroupEvent = sequelize.define('GroupEvent', {
     event_id: {
         type: UUID,
         references: {
-            model: 'Events',
+            model: 'events',
             key: 'id',
         },
     },
     group_id: {
         type: UUID,
         references: {
-            model: 'Groups',
+            model: 'groups',
             key: 'id',
         },
     },
@@ -123,7 +123,7 @@ const Event = sequelize.define('Event', {
     creator: {
         type: UUID,
         references: {
-            model: 'Users',
+            model: 'users',
             key: 'id',
         },
     },
@@ -158,18 +158,18 @@ const Comment = sequelize.define(
       type: STRING,
     },
     user_id: {
-      type: UUID,
-      references: {
-        model: "Users",
-        key: "id",
-      },
+        type: UUID,
+        references: {
+            model: 'users',
+            key: 'id',
+        },
     },
     event_id: {
-      type: UUID,
-      references: {
-        model: "Events",
-        key: "id",
-      },
+        type: UUID,
+        references: {
+            model: 'events',
+            key: 'id',
+        },
     },
   },
   {
