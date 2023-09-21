@@ -6,37 +6,40 @@ const { NotFoundError } = require('../errors');
 
 // add Comments
 const addComment = async (req, res) => {
+    const { eventId } = req.params;
+    // note: the usedId should come from the auth middleware
+    const { body, userId } = req.body; // seems the db is rejecting hardcoded values, so you should pass the userId from the req body
+
+    // Check if the event exists
+    const eventExist = await Event.findOne({
+        where: { id: eventId },
+    });
+
+    if (!eventExist) {
+        return res.status(404).json({ message: "Event not found" });
+    }
+
     try {
-        const eventId = req.params;
-        // the user_id should come from a middleware
-        const { body } = req.body;
-
-        // const eventExist = await Event.findOne({
-        //     where: { id: id },
-        // });
-
-        // if (!eventExist) {
-        //     throw new NotFoundError("Event not found");
-        // }
-
         // Create a new comment using the Comment model
         const newComment = await Comment.create({
             body,
-            user_id : user2_id,
+            user_id: userId,
             event_id: eventId,
         });
 
         return res.status(201).json({
-            message: "comment created successfully",
+            message: "Comment created successfully",
             newComment
         });
     } catch (error) {
-        console.error(error);
+        console.error(error.message);
+        console.error(error.stack);
         return res.status(500).json({ message: 'Internal server error' });
     }
 };
 
-//Get comment 
+
+//Get all comments 
 const getComment = async (req, res) => {
     try {
         const comments = await Comment.findAll()
@@ -44,11 +47,26 @@ const getComment = async (req, res) => {
     } catch (error) {
         console.log(error);
         return res.status(500).json({ message: 'Internal server error' });
-}
+    }
 }
 
-// Get comments from an event by Id
-const getSingleComment = async (req, res) => {
+// get a single comment with comments id
+const findCommentById = async (req, res) => {
+    const { commentId } = req.params;
+    const comment = await Comment.findOne({
+        where: {id : commentId}
+    });
+    if (!comment) {
+        return res.status(404).send("No such comment")
+    };
+    return res.status(200).json({
+        comment
+    })
+}
+
+
+// Get comment from an event by Id
+const getEventComment = async (req, res) => {
     try {
         const eventId = req.params.eventId;
 
@@ -70,30 +88,31 @@ const getSingleComment = async (req, res) => {
 
 const updateComment = async (req, res) => {
     try {
-      const commentId = req.params.commentId;
-      const { body } = req.body;
-  
-      // Find the comment by ID
-      const comment = await Comment.findByPk(commentId);
-  
-      if (!comment) {
-        return res.status(404).json({ message: 'Comment not found' });
-      }
-  
-      // Update the comment's body
-      comment.body = body;
-      await comment.save();
-  
-      return res.status(200).json(comment);
+        const commentId = req.params.commentId;
+        const { body } = req.body;
+
+        // Find the comment by ID
+        const comment = await Comment.findByPk(commentId);
+
+        if (!comment) {
+            return res.status(404).json({ message: 'Comment not found' });
+        }
+
+        // Update the comment's body
+        comment.body = body;
+        await comment.save();
+
+        return res.status(200).json(comment);
     } catch (error) {
-      console.error(error);
-      return res.status(500).json({ message: 'Internal server error' });
+        console.error(error);
+        return res.status(500).json({ message: 'Internal server error' });
     }
-  }
+}
 
 module.exports = {
-    getSingleComment,
+    getEventComment,
     addComment,
     getComment,
-    updateComment
+    updateComment,
+    findCommentById,
 };
