@@ -30,25 +30,25 @@ const createEvent = async (req, res) => {
   };
 
   // get user from the auth middleware
-  // const user = req.user;
-  // const userId = user.id;
+  const user = req.user;
+  const userId = user.id;
   // find user
-  // const userExist = await User.findOne({
-  //   where: {
-  //     id: userId
-  //   }
-  // });
+  const userExist = await User.findOne({
+    where: {
+      id: userId
+    }
+  });
   // throw an error if user does not exist
-  // if (!userExist) {
-  //   return res.status(404).json({ message: 'invalid credentials' });
-  // }
+  if (!userExist) {
+    return res.status(404).json({ message: 'invalid credentials' });
+  }
 
   try {
     const createEvent = await Event.create({
       title,
       description,
       location,
-      creator_id: "user1_id", // this is hard coded, should pass the actual id from the auth middle
+      creator_id: userId, // this is hard coded, should pass the actual id from the auth middle
       start_date,
       end_date,
       start_time,
