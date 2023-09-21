@@ -311,15 +311,6 @@ const Like = sequelize.define(
     modelName: "likes",
   }
 );
-// Define the associations here...
-sequelize
-  .sync()
-  .then(() => {
-    console.log("Database synchronized successfully.");
-  })
-  .catch((error) => {
-    console.error("Database synchronization error:", error);
-  });
 
 // Define the associations here...
 // User to Event relationship
