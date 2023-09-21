@@ -23,9 +23,6 @@ app.use(function (req, res, next) {
   next();
 });
 
-// Routes
-app.use("/api", groupsRoutes);
-
 readdirSync("./src/routes").map((path) =>
   app.use("/api", require(`./src/routes/${path}`))
 );

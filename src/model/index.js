@@ -8,9 +8,9 @@ const User = sequelize.define(
   "User",
   {
     id: {
-        type: UUID,
-        primaryKey: true,
-        defaultValue: UUIDV4,
+      type: UUID,
+      primaryKey: true,
+      defaultValue: UUIDV4,
     },
     name: {
       type: STRING,
@@ -25,7 +25,9 @@ const User = sequelize.define(
       type: STRING,
     },
   },
+
   {
+    timestamps: false,
     tableName: "users",
     modelName: "users",
   }
@@ -35,21 +37,22 @@ const InterestedEvent = sequelize.define(
   "InterestedEvent",
   {
     user_id: {
-        type: UUID,
-        references: {
-            model: 'users',
-            key: 'id',
-        },
+      type: UUID,
+      references: {
+        model: "Users",
+        key: "id",
+      },
     },
     event_id: {
-        type: UUID,
-        references: {
-            model: 'events',
-            key: 'id',
-        },
+      type: UUID,
+      references: {
+        model: "Events",
+        key: "id",
+      },
     },
   },
   {
+    timestamps: false,
     tableName: "interested_events",
     modelName: "interested_events",
   }
@@ -59,21 +62,22 @@ const UserGroup = sequelize.define(
   "UserGroup",
   {
     user_id: {
-        type: UUID,
-        references: {
-            model: 'users',
-            key: 'id',
-        },
+      type: UUID,
+      references: {
+        model: "Users",
+        key: "id",
+      },
     },
     group_id: {
-        type: UUID,
-        references: {
-            model: 'groups',
-            key: 'id',
-        },
+      type: UUID,
+      references: {
+        model: "Groups",
+        key: "id",
+      },
     },
   },
   {
+    timestamps: false,
     tableName: "user_groups",
     modelName: "user_groups",
   }
@@ -83,21 +87,22 @@ const GroupEvent = sequelize.define(
   "GroupEvent",
   {
     event_id: {
-        type: UUID,
-        references: {
-            model: 'events',
-            key: 'id',
-        },
+      type: UUID,
+      references: {
+        model: "Events",
+        key: "id",
+      },
     },
     group_id: {
-        type: UUID,
-        references: {
-            model: 'groups',
-            key: 'id',
-        },
+      type: UUID,
+      references: {
+        model: "Groups",
+        key: "id",
+      },
     },
   },
   {
+    timestamps: false,
     tableName: "group_events",
     modelName: "group_events",
   }
@@ -115,12 +120,9 @@ const Group = sequelize.define(
       type: STRING,
       allowNull: false,
     },
-    description: {
-      type: STRING,
-      allowNull: false,
-    },
   },
   {
+    timestamps: false,
     tableName: "groups",
     modelName: "groups",
   }
@@ -142,19 +144,25 @@ const Event = sequelize.define(
       type: STRING,
     },
     creator: {
-        type: UUID,
-        references: {
-            model: 'users',
-            key: 'id',
-        },
+      type: UUID,
+      references: {
+        model: "Users",
+        key: "id",
+      },
     },
     location: {
       type: STRING,
     },
-    start_at: {
+    start_date: {
       type: DATE,
     },
-    end_at: {
+    start_time: {
+      type: DATE,
+    },
+    end_date: {
+      type: DATE,
+    },
+    end_time: {
       type: DATE,
     },
     thumbnail: {
@@ -163,6 +171,7 @@ const Event = sequelize.define(
     },
   },
   {
+    timestamps: false,
     tableName: "events",
     modelName: "events",
   }
@@ -180,21 +189,22 @@ const Comment = sequelize.define(
       type: STRING,
     },
     user_id: {
-        type: UUID,
-        references: {
-            model: 'users',
-            key: 'id',
-        },
+      type: UUID,
+      references: {
+        model: "Users",
+        key: "id",
+      },
     },
     event_id: {
-        type: UUID,
-        references: {
-            model: 'events',
-            key: 'id',
-        },
+      type: UUID,
+      references: {
+        model: "Events",
+        key: "id",
+      },
     },
   },
   {
+    timestamps: false,
     tableName: "comments",
     modelName: "comments",
   }
@@ -216,6 +226,7 @@ const Image = sequelize.define(
     },
   },
   {
+    timestamps: false,
     tableName: "images",
     modelName: "images",
   }
