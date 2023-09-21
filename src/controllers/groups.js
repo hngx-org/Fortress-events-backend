@@ -1,8 +1,8 @@
 const sequelize = require("sequelize");
-const { Group } = require("../model");
+const { Group, UserGroup } = require("../model");
 const { NotFoundError } = require("../errors");
 
-//create event
+//create group
 const createGroup = async (req, res) => {
   try {
     // return res.send(req.body);
@@ -15,7 +15,7 @@ const createGroup = async (req, res) => {
   }
 };
 
-// get all events
+// get all groups
 const getAllGroups = async (req, res) => {
   try {
     const groups = await Group.findAll({
@@ -30,7 +30,7 @@ const getAllGroups = async (req, res) => {
   }
 };
 
-//get event by id
+//get group by id
 const getSingleGroup = async (req, res) => {
   try {
     const { groupId } = req.params;
@@ -47,7 +47,7 @@ const getSingleGroup = async (req, res) => {
   }
 };
 
-// update event
+// update group
 
 const updateGroup = async (req, res) => {
   try {
@@ -67,6 +67,7 @@ const updateGroup = async (req, res) => {
   }
 };
 
+// delete group
 const deleteGroup = async (req, res) => {
   try {
     const { groupId } = req.params;
