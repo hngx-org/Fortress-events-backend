@@ -5,17 +5,16 @@ const { readdirSync } = require("fs");
 
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
+const logger = require("morgan");
 const errorHandlerMiddleware = require("./src/middlewares/error-handler");
-
 const sequelize = require("./src/config/dbConfig");
 require("./src/model/index");
 
-app.use(logger("dev"));
-
 const notFound = require("./src/middlewares/not-found");
 const swaggerUi = require('swagger-ui-express')
-const swaggerSpec = require('./src/utils/constants/swagger')
+const swaggerSpec = readdirSync('./src/utils/constants')
 
+app.use(logger("dev"));
 app.use(express.json());
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
