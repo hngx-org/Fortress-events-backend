@@ -1,72 +1,6 @@
-<<<<<<< HEAD
-# Team Fortress (Backend)
-
-## Requisites
-
-Node and npm
-
-## Initial setup 1
-
-
-
-
-Install all modules
-
-npm install
-
-# SetUp with cloud database
-cp .env_example .env
-
-
------------------------------------------------------------------------------
------------------------------------------------------------------------------
-
-## Setup local environment variables
-
-```
-cp .env_sample .env
-```
-
-## Database
-
-You need to setup a MySQL instance yourself, the default database name is: `fortress_db` 
-DB schemas are automatically synced
-
-
-
-## Easily testing server endpoints
-
-Make use of POSTMAN to test your endpoints extensively
-
-
-
-
-### Install MySQL
-
-
-# Linux Shells
-```sh
-sudo apt update
-sudo apt install mysql-server
-```
-
-
-# Windows (Don't know much about windows so please read on the installation process)
-
-```sh
-Visit https://dev.mysql.com/downloads/installer/
-```
-
-# After Installation(Linux) Start the Mysql service
-
-```sh
-sudo systemctl start mysql
-
-sudo mysql
-```
-
-=======
 # EVENTS APP BACKEND
+
+
 
 Backend for the events mobile app. Built as part of the HNGx Internship by team fortress.
 
@@ -130,7 +64,6 @@ sudo mysql
 
 Then:
 
->>>>>>> afb805cc2e26933bf41c7b9c5874f6f37a9e3718
 ```sql
 CREATE USER 'fortress'@'localhost' IDENTIFIED BY 'f0rtr355';
 
@@ -141,25 +74,6 @@ FLUSH PRIVILEGES;
 exit
 ```
 
-<<<<<<< HEAD
-```
-mysql -u fortress -p (enter)
-#when prompted for password use the password f0rtr355 set above
-```
-
-```sql
-CREATE DATABASE fortress_db;
-```
-
-
-----------------------------------------------------------------------------
-----------------------------------------------------------------------------
-## Run the server
-
-```
-npm run build
-```
-=======
 ## 🌐 Endpoints
 
 - POST `/api/users/register` -> User registration
@@ -237,4 +151,8 @@ Documentation can be found [here](/)
 ## 🤝 The Team
 
 Built by team fortress. Team members can be found at [AUTHORS](/AUTHORS)
->>>>>>> afb805cc2e26933bf41c7b9c5874f6f37a9e3718
+
+# updating a specific user profile
+![response](updateshot.png)
+
+the above image shows the response after make a put request to the endpoint api/users/:userId
