@@ -1,3 +1,4 @@
+
 const { User, Event } = require('../model/index');
 
 // helper functions

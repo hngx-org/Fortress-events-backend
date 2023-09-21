@@ -5,7 +5,7 @@ const router = express.Router();
 const upload = require('../middlewares/multer/index');
 
 // import controllers
-const { createEvent } = require('../controller/event');
+const { createEvent } = require('../controllers/events');
 
 
 // post request
