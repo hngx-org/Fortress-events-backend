@@ -4,7 +4,6 @@ require("dotenv").config();
 const { readdirSync } = require("fs");
 
 const cookieParser = require("cookie-parser");
-app.use("/uploads", express.static("uploads"));
 const cors = require("cors");
 const logger = require("morgan");
 const notFound = require("./src/middlewares/not-found");
