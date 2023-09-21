@@ -8,7 +8,12 @@ const {
   deleteEvent,
 } = require("../controllers/events");
 
-router.route("/events").get(getAllEvents).post(createEvent);
+// import middlewares
+const upload = require('../middlewares/multer');
+
+router.post('/events', upload, createEvent )
+router.route("/events").get(getAllEvents);
+
 
 router
   .route("/events/:eventId")

@@ -11,17 +11,24 @@
     "prod": "cross-env NODE_ENV=production nodemon app.js"
   },
   "dependencies": {
+    "cloudinary": "^1.40.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "cross-env": "^7.0.3",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "http-status-codes": "^2.3.0",
+    "joi": "^17.10.2",
     "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
     "mysql": "^2.18.1",
     "mysql2": "^3.6.1",
     "nodemon": "^3.0.1",
     "sequelize": "^6.33.0",
+    "streamifier": "^0.1.1",
     "tedious": "^16.4.0"
+  },
+  "devDependencies": {
+    "pg": "^8.11.3"
   }
 }
