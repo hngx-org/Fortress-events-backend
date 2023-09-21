@@ -7,7 +7,7 @@ const { STRING, DATE, UUID, UUIDV4 } = DataTypes
 
 const User = sequelize.define('User', {
     id: {
-        type: STRING,
+        type: UUID,
         primaryKey: true,
         defaultValue: UUIDV4,
     },
