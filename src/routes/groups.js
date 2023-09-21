@@ -1,3 +1,7 @@
+const express = require("express");
+const router = express.Router();
+
+module.exports = router;
 const { Router } = require("express");
 const { createGroup, getGroups } = require("../controller/groups");
 
