@@ -8,8 +8,6 @@ const cors = require("cors");
 const errorHandlerMiddleware = require("./src/middlewares/error-handler");
 const notFound = require("./src/middlewares/not-found");
 
-
-
 app.use(express.json());
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
@@ -33,10 +31,6 @@ readdirSync("./src/routes").map((path) =>
 );
 
 const PORT = process.env.PORT;
-
-app.get("/", (req, res) => {
-  res.send("i am homer");
-});
 
 app.listen(PORT || 3000, () => {
   console.log(`Event App running on http://localhost:${PORT}/`);
