@@ -16,32 +16,28 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use(errorHandlerMiddleware);
-app.use(notFound);
 
 app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "GET, PUT, POST");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  next();
-});
-
-readdirSync("./src/routes").map((path) =>
-  app.use("/api", require(`./src/routes/${path}`))
-);
-
-const PORT = process.env.PORT;
-
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET, PUT, POST");
+    res.header(
+        "Access-Control-Allow-Headers",
+        "Origin, X-Requested-With, Content-Type, Accept"
+        );
+        next();
+    });
+    
+    readdirSync("./src/routes").map((path) =>
+    app.use("/api", require(`./src/routes/${path}`))
+    );
+    
+    const PORT = process.env.PORT;
+    
 app.get('/', (req, res) => {
     res.send('i am homer')
 })
 
-const events_route = require('./src/routes/events');
-
-// use routes
-app.use('/api/event', events_route);
+app.use(notFound);
 
 app.listen(PORT || 3000, () => {
   console.log(`Event App running on http://localhost:${PORT}/`);
