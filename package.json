@@ -23,6 +23,7 @@
     "mysql2": "^3.6.1",
     "nodemon": "^3.0.1",
     "passport": "^0.6.0",
+    "passport-google-oauth2": "^0.2.0",
     "passport-google-oauth20": "^2.0.0",
     "sequelize": "^6.33.0",
     "tedious": "^16.4.0"
