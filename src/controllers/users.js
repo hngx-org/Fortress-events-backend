@@ -1,13 +1,20 @@
 const { User} = require('../model')
-const { NotFoundError } = require("../errors")
 
+
+
+// updating a singleuser profile by id(pk)
 const updateSignleUserProfile =  async(req, res) =>{
     try{
         const id  = req.params.id;
         const updateProfile = await User.findByPk(id);
         if (!updateProfile) {
-            throw new NotFoundError("User not found");
-          };
+          return res.status(404).json({ message: 'User not found', status: 404 });
+        }        
+        const { name, email,avatar } = req.body
+        updateProfile.name = name;
+        updateProfile.email = email;
+        updateProfile.avatar = avatar;
+        await updateProfile.save();
         res.status(200).json({ updateProfile });
     }catch(error){
         console.log(error);
@@ -16,5 +23,6 @@ const updateSignleUserProfile =  async(req, res) =>{
 
 }
 
-
-module.exports ={updateSignleUserProfile}
+module.exports ={
+    updateSignleUserProfile
+}
