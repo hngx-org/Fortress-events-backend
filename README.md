@@ -87,12 +87,11 @@ npm run test
 
 Alternatively, online API testing tools such as Postman can be used to test the endpoints.
 
+
 ## 🌐 Endpoints
 
 - POST `/api/users/register` -> User registration
-
 - POST `/api/users/login` -> User login
-
 - GET `/api/users/profile` -> Get user profile
 - PUT `/api/users/profile` -> Update user profile
 - POST `/api/events` -> Create a new event
@@ -113,8 +112,7 @@ Alternatively, online API testing tools such as Postman can be used to test the 
 - POST `/api/groups/:groupId/members/:userId` -> Add a user to a group
 - DELETE `/api/groups/:groupId/members/:userId` -> Remove a user from a group
 
-## 📩 Requests
-
+### 📩 Requests
 - Accepts JSON only.
 - Request body should **only** contain the specified values and follow the database schema.
 - Example request:
@@ -138,6 +136,7 @@ Returns JSON.
 - 403 - Unauthorized: A user is not authenticated
 - 404 - User or Resource Not Found.
 - 500 - Internal Server Error.
+
 
 ## 📄 License
 
