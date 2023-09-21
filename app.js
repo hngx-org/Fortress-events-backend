@@ -7,11 +7,12 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const errorHandlerMiddleware = require("./src/middlewares/error-handler");
 const notFound = require("./src/middlewares/not-found");
+const { route } = require("./src/routes/events");
 
 readdirSync("./src/routes").map((path) =>
-  app.use("/", require(`./src/routes/${path}`))
+  app.use("/api", require(`./src/routes/${path}`))
 );
-
+app.use('/api', route)
 app.use(express.json());
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
