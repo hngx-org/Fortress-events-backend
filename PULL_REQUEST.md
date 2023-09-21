@@ -48,7 +48,8 @@ Returns all the comments of users of a particular event in JSON.
 
 
 ## Screenshots
-The following screenshots is a demo test in mocha showing the successful passing of the testcases
+The following screenshots is a demo test in Postman showing the successful passing of the testcases:
+
 ![](/screenshots/all_comments.png)
 
 ![](/screenshots/comment_by_id.png)
