@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Team Fortress (Backend)
 
 ## Requisites
@@ -90,4 +91,51 @@ CREATE DATABASE fortress_db;
 
 ```
 npm run build
+=======
+# Project Event App
+
+Event App Comment API
+
+folder structure:
+
+```
+
+```
+
+src folder:
+
+```
+- src
+    - config
+        - dbConfig.js
+        - index.js
+        - dev.js
+        - prod.js
+    - controllers
+        - index.js
+    - middleware
+        - errorHandler
+            - index.js
+    model
+        - index.js
+    - routes
+        - index.js
+    - utils
+        - constants
+            - response.js
+- app.js
+- .env
+- .gitignore
+- package.json
+- README.md
+- package-lock.json
+```
+
+```
+test folder:
+```
+
+```
+
+>>>>>>> 52135f9906fc2c5f0f82991111f371c17edd1f59
 ```
