@@ -89,7 +89,27 @@ async function getImageForComment(req, res) {
   }
 }
 
+// Add comment to an event
+async function createComment(req, res) {
+	try {
+		const { eventId } = req.params;
+		const { body, userId } = req.body;
+
+		const event = await Event.findByPk(eventId);
+		if (!event) {
+			throw new NotFoundError('Event not found');
+		}
+
+		const comment = await Comment.create({ body, user_id: userId, event_id: eventId });
+
+		return res.status(201).json(comment);
+	} catch (error) {
+		return res.status(500).json({ error: error.message });
+	}
+}
+
 module.exports = {
   addImageToComment,
   getImageForComment,
+  createComment
 };

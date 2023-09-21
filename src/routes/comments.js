@@ -5,10 +5,7 @@ const router = express.Router();
 const multer = require("multer");
 const path = require("path");
 
-const {
-  addImageToComment,
-  getImageForComment,
-} = require("../controllers/comments");
+const { addImageToComment, getImageForComment, createComment } = require('../controllers/comments');
 
 // Set up multer storage
 const storage = multer.diskStorage({
@@ -30,5 +27,8 @@ router.post("/:commentId/images", upload.single("image"), addImageToComment);
 
 // GET /api/comments/:commentId/images
 router.get("/:commentId/images", getImageForComment);
+
+// POST /api/events/:eventId/comments
+router.post('/events/:eventId/comments', createComment);
 
 module.exports = router;
