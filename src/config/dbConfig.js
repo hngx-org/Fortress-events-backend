@@ -26,3 +26,4 @@ sequelize
 module.exports = {
   sequelize: sequelize,
 };
+

@@ -8,6 +8,7 @@ const cors = require("cors");
 const errorHandlerMiddleware = require("./src/middlewares/error-handler");
 const notFound = require("./src/middlewares/not-found");
 
+
 app.use(express.json());
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
@@ -26,6 +27,7 @@ app.use(function (req, res, next) {
 readdirSync("./src/routes").map((path) =>
   app.use("/api", require(`./src/routes/${path}`))
 );
+
 
 app.use(errorHandlerMiddleware);
 app.use(notFound);

@@ -101,6 +101,7 @@ const Group = sequelize.define('Group', {
         type: STRING,
         allowNull: false,
     },
+    timestamps: false
 }, {
     tableName: 'groups',
     modelName: 'groups'
@@ -139,6 +140,7 @@ const Event = sequelize.define('Event', {
         type: STRING,
         comment: 'URL to the thumbnail',
     },
+    timestamps: false,
 }, {
     tableName: 'events',
     modelName: 'events'
