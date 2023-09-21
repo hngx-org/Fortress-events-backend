@@ -13,10 +13,6 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-readdirSync("./src/routes").map((path) =>
-  app.use("/api", require(`./src/routes/${path}`))
-);
-
 app.use(errorHandlerMiddleware);
 app.use(notFound);
 
@@ -29,6 +25,10 @@ app.use(function (req, res, next) {
   );
   next();
 });
+
+readdirSync("./src/routes").map((path) =>
+  app.use("/api", require(`./src/routes/${path}`))
+);
 
 const PORT = process.env.PORT;
 
