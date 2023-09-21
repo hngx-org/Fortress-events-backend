@@ -7,6 +7,8 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const errorHandlerMiddleware = require("./src/middlewares/error-handler");
 const notFound = require("./src/middlewares/not-found");
+const swaggerUi = require('swagger-ui-express')
+const swaggerSpec = require('./src/utils/constants/swagger')
 
 app.use(express.json());
 app.use(cors());
@@ -29,11 +31,13 @@ readdirSync("./src/routes").map((path) =>
 
 app.use(errorHandlerMiddleware);
 app.use(notFound);
+app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 
 const PORT = process.env.PORT;
 
 app.listen(PORT || 3000, () => {
   console.log(`Event App running on http://localhost:${PORT}/`);
+  
 });
 
 module.exports = app;
