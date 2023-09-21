@@ -25,14 +25,9 @@
     "nodemon": "^3.0.1",
     "sequelize": "^6.33.0",
     "sqlite3": "^5.1.6",
-<<<<<<< HEAD
     "tedious": "^16.4.0"
   },
   "devDependencies": {
     "multer": "^1.4.5-lts.1"
-=======
-    "tedious": "^16.4.0",
-    "validator": "^13.11.0"
->>>>>>> 52135f9906fc2c5f0f82991111f371c17edd1f59
   }
 }
