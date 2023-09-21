@@ -2,9 +2,9 @@ const express = require("express");
 const router = express.Router();
 
 // Import controller function to get group details
-const { getGroupDetails } = require("../controllers/groups");
+const { createGroup } = require("../controllers/groups");
 
 // Get group details
-router.get("/groups/:groupId", getGroupDetails);
+router.post("/groups", createGroup);
 
 module.exports = router;
