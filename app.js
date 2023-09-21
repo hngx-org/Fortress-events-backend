@@ -44,7 +44,7 @@ app.get('/', (req, res) => {
 });
 
 // import routes
-const events_route = require('./src/routes/index');
+const events_route = require('./src/routes/event');
 
 // use routes
 app.use('/api/event', events_route)

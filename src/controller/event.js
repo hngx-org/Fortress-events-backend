@@ -39,7 +39,7 @@ const createEvent = handleAsync(async (req, res) => {
             location,
             start_at,
             end_at,
-            thumbnail: thubUrl,
+            thumbnail: thubUrl.toString(),
         });
         return res.status(200).json(handleResponse({
             message: 'event created successfully', data: { ...eventData }, success: true,
