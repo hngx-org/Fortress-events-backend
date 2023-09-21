@@ -214,6 +214,7 @@ const Image = sequelize.define(
   {
     tableName: "images",
     modelName: "images",
+    timestamps: false,
   }
 );
 

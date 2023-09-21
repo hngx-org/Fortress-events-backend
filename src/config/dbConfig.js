@@ -11,9 +11,6 @@ const sequelize = new Sequelize(
     host: DB_HOST,
     dialect: "mysql",
     dialectModule: require("mysql2"),
-    define: {
-      timestamps: false, // Disable timestamps for all models
-    },
   }
 );
 
