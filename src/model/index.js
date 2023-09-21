@@ -120,7 +120,6 @@ const Group = sequelize.define(
       type: STRING,
       allowNull: false,
     },
-    timestamps: false
   },
   {
     timestamps: false,
