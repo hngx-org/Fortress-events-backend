@@ -102,6 +102,7 @@ const Group = sequelize.define('Group', {
         allowNull: false,
     },
 }, {
+    timestamps: false,
     tableName: 'groups',
     modelName: 'groups'
 });
