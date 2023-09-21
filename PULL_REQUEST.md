@@ -39,7 +39,7 @@ Any bugs found in this endpoint can be directed to team fortress slack channel.
 ### Request
 Returns all the comments of users of a particular event in JSON.
 
-## Response Status
+### Response Status
 * 400 - Bad Request:
   - Request body has more than the specified attribute.
   - Invalid content-Type.
@@ -49,9 +49,9 @@ Returns all the comments of users of a particular event in JSON.
 
 ## Screenshots
 The following screenshots is a demo test in mocha showing the successful passing of the testcases
-[!](/screenshots/all_comments.png)
+![](/screenshots/all_comments.png)
 
-[!](/screenshots/comment_by_id.png)
+![](/screenshots/comment_by_id.png)
 
 ## Types of changes
 - [x] New feature (non-breaking change which adds functionality)
