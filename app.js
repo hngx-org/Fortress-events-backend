@@ -14,7 +14,6 @@ app.use(logger("dev"));
 
 const notFound = require("./src/middlewares/not-found");
 
-
 app.use(express.json());
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
