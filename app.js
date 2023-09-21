@@ -36,25 +36,18 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-readdirSync("./src/routes").map((path) =>
-  app.use("/api", require(`./src/routes/${path}`))
-);
+readdirSync("./src/routes").map((path) => {
+  if (path !== "auth.js") {
+    app.use("/api", require(`./src/routes/${path}`));
+  } 
+  app.use("/auth", require(`./src/routes/${path}`))
+});
 
-app.get('/login/google', passport.authenticate('google', {
-  scope: [ 'email', 'profile' ]
-}));
 
+app.get('/', (req, res) => {
+  res.send('Welcome to Fortress')
+});
 
-app.get('/oauth2/redirect/google',
-  passport.authenticate('google', { failureRedirect: '/login', failureMessage: true }),
-  
-  function(req, res) {
-    res.redirect('/');
-  });
-
-  app.get('/', (req, res) => {
-    res.send('Welcome to Fortress')
-  });
     
 
 app.use(errorHandlerMiddleware);
