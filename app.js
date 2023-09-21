@@ -5,10 +5,18 @@ const logger = require("morgan");
 const bodyParser = require("body-parser");
 const config = require("./src/config");
 const { HttpError } = require("http-errors");
-const errorHandler = require("./src/middlewares/errorHandler");
+// const errorHandler = require("./src/middlewares/errorHandler");
 const sequelize = require("./src/config/dbConfig");
+const passport = require('passport');
+const session = require('express-session')
+const { User } = require("./src/model/index")
+const routes = require("./src/routes/index")
+const PORT = process.env.PORT;
+
+
 require('./src/model/index')
 
+require('./src/controller/authController')
 
 const app = express();
 
@@ -20,9 +28,18 @@ app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false }
+}))
+app.use(passport.initialize())
+app.use(passport.session())
 
-app.use(HttpError);
-app.use(errorHandler);
+
+// app.use(HttpError);
+// app.use(errorHandler);
 
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -31,19 +48,19 @@ app.use(function (req, res, next) {
     next();
 });
 
+app.use("/", routes)
+
+
 // db.sync({ }).then(()=>{
 //     console.log(`Database is connected successfully !`);
 // }).catch((error)=>{
 //     console.log(`Database error at ${error}`)
 // })
 
-const PORT = process.env.PORT;
 
-app.get('/', (req, res) => {
-    res.send('i am homer')
-})
 
-app.listen(PORT || 3000, () => {
+
+app.listen(PORT , () => {
     console.log(`Event App running on http://localhost:${PORT}/`)
 });
 
