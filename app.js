@@ -13,9 +13,6 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-app.use(errorHandlerMiddleware);
-app.use(notFound);
-
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Methods", "GET, PUT, POST");
@@ -29,6 +26,9 @@ app.use(function (req, res, next) {
 readdirSync("./src/routes").map((path) =>
   app.use("/api", require(`./src/routes/${path}`))
 );
+
+app.use(errorHandlerMiddleware);
+app.use(notFound);
 
 const PORT = process.env.PORT;
 
