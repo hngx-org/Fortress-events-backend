@@ -8,6 +8,11 @@ const path = require("path");
 const {
   addImageToComment,
   getImageForComment,
+  getComment,
+  addComment,
+  getEventComment,
+  updateComment,
+  findCommentById,
 } = require("../controllers/comments");
 
 // Set up multer storage
@@ -31,20 +36,13 @@ router
   .post(upload.single("image"), addImageToComment)
   .get(getImageForComment);
 
-//import controllers
-const { getComment, addComment, getEventComment, updateComment, findCommentById } = require('../controllers/comments');
+// Define the routes individually
+router.post("/events/:eventId/comments", addComment);
+router.get("/events/:eventId/comments", getEventComment);
+router.get("/events/comments", getComment);
+router.get("/events/comments/:commentId", findCommentById);
+router.put("/comments/:commentId", updateComment);
 
-
-// Create a comment for an event
-router.post('/events/:eventId/comments', addComment);
-
-// Get comments for a specific event
-router.get('/events/:eventId/comments', getEventComment);
-router.get('/events/comments', getComment);
-router.get('/events/comments/:commentId', findCommentById);
-
-
-// Update a comment for an event
-router.put('/comments/:commentId', updateComment);
+module.exports = router;
 
 module.exports = router;
