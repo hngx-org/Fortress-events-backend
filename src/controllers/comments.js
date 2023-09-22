@@ -7,7 +7,7 @@ const e = require("express");
 const addComment = async (req, res) => {
   const { eventId } = req.params;
   // note: the usedId should come from the auth middleware
-  const { body, userId } = req.body; // seems the db is rejecting hardcoded values, so you should pass the userId from the req body
+  const { body, user_id } = req.body; // seems the db is rejecting hardcoded values, so you should pass the userId from the req body
 
   // Check if the event exists
   const eventExist = await Event.findOne({
@@ -22,7 +22,7 @@ const addComment = async (req, res) => {
     // Create a new comment using the Comment model
     const newComment = await Comment.create({
       body,
-      user_id: userId,
+      user_id: user_id,
       event_id: eventId,
     });
 
@@ -41,7 +41,7 @@ const addComment = async (req, res) => {
 const getComment = async (req, res) => {
   try {
     const comments = await Comment.findAll();
-    return res.status(200).json(comments);
+    return res.status(200).json({ comments });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "Internal server error" });
@@ -68,17 +68,25 @@ const getEventComment = async (req, res) => {
     const eventId = req.params.eventId;
 
     // Find the event by ID and include associated comments
-    const event = await Event.findByPk(eventId, {
-      include: Comment,
+    const event = await Comment.findAll({
+      where: { event_id: eventId }, // Filter comments by event_id
+      include: [
+        {
+          model: CommentImage,
+          as: "commentImages", // Alias for the CommentImage association
+          include: [
+            {
+              model: Image,
+              as: "image", // Alias for the Image association within CommentImage
+            },
+          ],
+        },
+      ],
     });
-
-    if (!event) {
-      throw new NotFoundError("Event not found");
-    }
-    return res.status(200).json(event.Comments);
+    res.status(200).json({ event });
   } catch (error) {
     console.error(error);
-    return res.status(404).json({ message: error.message });
+    return res.status(500).json({ message: "Internal server error" });
   }
 };
 
