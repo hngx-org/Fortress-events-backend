@@ -2,26 +2,49 @@
 
 Backend for the events mobile app. Built as part of the HNGx Internship by team fortress.
 
-## 🔧 Tech Stack
 
-- NodeJS
-- ExpressJS
-- MySQL
+## Table of Contents
+  - [Project Configuration](#project-configuration)
+- [Getting Started](#getting-started-running-the-server)
+  - [Tech Stack](#tech-stack)
+  - [Testing](#testing)
+- [Endpoints](#endpoints) 
+  - [APIs](#apis) 
+  - [Request](#request) 
+  - [Response](#response) 
+  - [Response Status](#response-status) 
+- [License](#license)
+- [Documentation](#documentation)
+- [Links](#links)
+- [The Team](#the-team)
 
-## 📝 Requirements
-
-This project requires nodeJS version >= 14 and npm package manager.
 
 ## 📁 Project Configuration
 
 The project is divided into:
 
-- Controller: found in `src/controller` folder. Coordinates the interaction between the UI and the backend services.
+- Controllers: found in `src/controller` folder. Coordinates the interaction between the UI and the backend services.
+
 - Middlewares: found in `src/middlewares` folder. Logic to process incoming HTTP requests and perform tasks such as authentication, validation, etc.
+
 - Model: found in `src/model` directory. Database Schema of the events app.
+
 - Routes: found in `src/routes` directory. URL endpoints and their corresponding method/action.
 
-## 💻 Running Locally
+
+## Getting Started: Running the Server
+
+### 🔧 Tech Stack
+
+- NodeJS
+- ExpressJS
+- MySQL
+
+### 📝 Requirements
+
+This project requires nodeJS version >= 14 and npm package manager.
+
+### 💻 Running Locally
 
 1. Clone this repository by running:
    ```bash
@@ -38,7 +61,26 @@ The project is divided into:
    npm run build
    ```
 
+
+### 💻 Testing
+
+Tests can be carried out locally by running:
+
+```bash
+npm run test
+```
+
+Alternatively, online API testing tools such as **Postman** can be used to test the endpoints.
+
+
 ## 🌐 Endpoints
+
+### apis
+
+The events app backend provides the following APIs:
+
+## 🌐 Endpoints
+
 
 - POST `/api/users/register` -> User registration
 - POST `/api/users/login` -> User login
@@ -50,7 +92,7 @@ The project is divided into:
 - PUT `/api/events/:eventId` -> Update event details
 - DELETE `/api/events/:eventId` -> Delete and event
 - POST `/api/events/:eventId/comments` -> Add a comment to an event
-  GET `/api/events/:eventId/comments` -> Get comments for an event
+- GET `/api/events/:eventId/comments` -> Get comments for an event
 - POST `/api/comments/:commentId/images` -> Add an image to a comment
 - GET `/api/comments/:commentId/images` -> Get images for a comment
 - POST `/api/users/:userId/interests/:eventId` -> Express interest in an event
@@ -62,22 +104,23 @@ The project is divided into:
 - POST `/api/groups/:groupId/members/:userId` -> Add a user to a group
 - DELETE `/api/groups/:groupId/members/:userId` -> Remove a user from a group
 
-## 📩 Requests
+
+### 📩 Request
 
 - Accepts JSON only.
 - Request body should **only** contain the specified values and follow the database schema.
 - Example request:
   ```json
   {
-    "name": "John Doe"
+    "name": "NAME"
   }
   ```
 
-## 📂 Response
+### 📂 Response
 
 Returns JSON.
 
-## ⚠️ Response Status
+### ⚠️ Response Status
 
 - 200 - OK: User or resource has been successfully updated.
 - 201 - Created: User or resource has been successfully created.
@@ -88,15 +131,6 @@ Returns JSON.
 - 404 - User or Resource Not Found.
 - 500 - Internal Server Error.
 
-## 💻 Testing
-
-Tests can be carried out locally by running:
-
-```bash
-npm run test
-```
-
-Alternatively, online API testing tools such as Postman can be used to test the endpoints.
 
 ## 📄 License
 
@@ -104,20 +138,16 @@ This project uses the MIT License as found in [LICENSE](/LICENSE)
 
 ## 📖 Documentation
 
+
+Documentation can be found in `/api-docs` endpoint.
+
 Documentation can be found [here](https://github.com/hngx-org/Fortress-events-backend/tree/main/routeDocs)
+
 
 ## 🔗 Links
 
-[Server URL]()
-
-[Database Schema]()
+* [Server URL](http://ec2-18-119-101-235.us-east-2.compute.amazonaws.com:3000/)
 
 ## 🤝 The Team
 
-Built by team fortress. Team members can be found at [AUTHORS](/AUTHORS)
-
-# updating a specific user profile
-
-![response](updateshot.png)
-
-the above image shows the response after make a put request to the endpoint api/users/:userId
+Built by TEAM FORTRESS

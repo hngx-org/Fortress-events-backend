@@ -11,7 +11,8 @@ const session = require("express-session");
 const sequelize = require("./src/config/dbConfig");
 require("./src/model/index");
 app.use(logger("dev"));
-
+const swaggerUi = require('swagger-ui-express'); 
+const specs = require('./swaggerConfig');
 const notFound = require("./src/middlewares/not-found");
 
 app.use(
@@ -56,6 +57,7 @@ app.get("/", (req, res) => {
 
 app.use(errorHandlerMiddleware);
 app.use(notFound);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 const PORT = process.env.PORT;
 
