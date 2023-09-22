@@ -4,7 +4,7 @@ const {
   expressInterest,
   getInterest,
   deleteInterest,
-} = require("../controllers/comments");
+} = require("../controllers/interests");
 
 router.route("/interest/:eventId").get(getInterest);
 
