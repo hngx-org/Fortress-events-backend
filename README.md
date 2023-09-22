@@ -51,7 +51,7 @@ This project requires nodeJS version >= 14 and npm package manager.
 
 1. Clone this repository by running:
    ```bash
-   git https://github.com/hngx-org/Fortress-events-backend
+   git clone https://github.com/hngx-org/Fortress-events-backend
    cd Fortress-events-backend
    ```
 2. Install the dependencies:
@@ -125,7 +125,7 @@ The events app backend provides the following APIs:
 - PUT `/api/events/:eventId` -> Update event details
 - DELETE `/api/events/:eventId` -> Delete and event
 - POST `/api/events/:eventId/comments` -> Add a comment to an event
-  GET `/api/events/:eventId/comments` -> Get comments for an event
+- GET `/api/events/:eventId/comments` -> Get comments for an event
 - POST `/api/comments/:commentId/images` -> Add an image to a comment
 - GET `/api/comments/:commentId/images` -> Get images for a comment
 - POST `/api/users/:userId/interests/:eventId` -> Express interest in an event
