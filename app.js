@@ -49,7 +49,9 @@ readdirSync("./src/routes").map((path) => {
 });
 
 app.get("/", (req, res) => {
-  res.send(req.user);
+  return req.user
+    ? res.send(req.user)
+    : res.send("I AM WORKING, but you are not logged in");
 });
 
 app.use(errorHandlerMiddleware);
