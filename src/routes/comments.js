@@ -25,10 +25,10 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-// POST /api/comments/:commentId/images
-router.post("/:commentId/images", upload.single("image"), addImageToComment);
-
-// GET /api/comments/:commentId/images
-router.get("/:commentId/images", getImageForComment);
+// Use router.route for /api/comments/:commentId/images
+router
+  .route("/comments/:commentId/images")
+  .post(upload.single("image"), addImageToComment)
+  .get(getImageForComment);
 
 module.exports = router;

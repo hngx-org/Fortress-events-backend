@@ -44,50 +44,63 @@ async function addImageToComment(req, res) {
 // Function to retrieve an image associated with a comment
 async function getImageForComment(req, res) {
   const commentId = req.params.commentId;
-  console.log("commentId", commentId);
 
   try {
     // Find the comment by ID
     const comment = await Comment.findByPk(commentId);
-    console.log("comment", comment);
 
     if (!comment) {
       throw new NotFoundError("Comment not found");
     }
 
-    // Now, let's find the associated image using a join operation
-    const commentImage = await CommentImage.findOne({
-      where: { commentId },
-      include: [{ model: Image, as: "image" }],
+    // Check if the comment is associated with any images in the CommentImage table
+    const commentImages = await CommentImage.findAll({
+      attributes: { exclude: ["id"] }, // Exclude the 'id' field
+      where: { comment_id: commentId }, // Filter by comment_id
     });
 
-    // Check if commentImage is null or if the associated image is null
-    if (!commentImage || !commentImage.image) {
+    if (!commentImages || commentImages.length === 0) {
       // Handle the case where no image is found
-      res.status(404).json({ message: "No image found for this comment" });
-      return; // Exit the function
+      return res
+        .status(404)
+        .json({ message: "No image found for this comment" });
     }
 
-    // Access the image URL from the associated image
-    const imageUrl = commentImage.image.imageUrl; // Adjust this based on your model structure
+    // Extract the image IDs from the CommentImage records
+    const imageIds = commentImages.map((commentImage) => commentImage.image_id);
 
-    // Send the image URL associated with the comment
-    res.status(200).json({ imageUrl });
+    // Use the extracted image IDs to find the associated images
+    const images = await Image.findAll({
+      where: { id: imageIds }, // Find images with matching IDs
+    });
+
+    if (!images || images.length === 0) {
+      // Handle the case where no images are found
+      return res
+        .status(404)
+        .json({ message: "Images not found for this comment" });
+    }
+
+    // Access the image URLs from the associated images
+    const imageUrls = images.map((image) => image.url);
+
+    // Send the image URLs associated with the comment
+    res.status(200).json({ imageUrls });
   } catch (error) {
-    console.error("Error retrieving image for comment:", error);
+    console.error("Error retrieving images for comment:", error);
 
-    if (error.message.includes("Image is not associated to CommentImage")) {
-      // Handle the specific error message indicating that "Image is not associated with CommentImage."
-      res
-        .status(400)
-        .json({ error: "Image is not associated with CommentImage" });
+    if (error.name === "NotFoundError") {
+      // Handle the specific NotFoundError
+      return res.status(404).json({ error: "Comment not found" });
     } else {
-      console.error("Error retrieving image for comment:", error);
-      // Send an error response for other types of errors
-      res.status(500).json({ error: "Internal server error" });
+      console.error("Error retrieving images for comment:", error);
+      // Send an error response for other types of error
+      return res.status(500).json({ error: "Internal server error" });
     }
   }
 }
+
+// get all comments and get the image url if there is one
 
 module.exports = {
   addImageToComment,
