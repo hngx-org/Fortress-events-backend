@@ -27,7 +27,7 @@ The project is divided into:
 
 1. Clone this repository by running:
    ```bash
-   git https://github.com/hngx-org/Fortress-events-backend
+   git clone https://github.com/hngx-org/Fortress-events-backend
    cd Fortress-events-backend
    ```
 2. Install the dependencies:
