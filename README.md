@@ -61,6 +61,7 @@ This project requires nodeJS version >= 14 and npm package manager.
    npm run build
    ```
 
+
 ### 💻 Testing
 
 Tests can be carried out locally by running:
@@ -77,6 +78,9 @@ Alternatively, online API testing tools such as **Postman** can be used to test 
 ### apis
 
 The events app backend provides the following APIs:
+
+## 🌐 Endpoints
+
 
 - POST `/api/users/register` -> User registration
 - POST `/api/users/login` -> User login
@@ -134,7 +138,11 @@ This project uses the MIT License as found in [LICENSE](/LICENSE)
 
 ## 📖 Documentation
 
+
 Documentation can be found in `/api-docs` endpoint.
+
+Documentation can be found [here](https://github.com/hngx-org/Fortress-events-backend/tree/main/routeDocs)
+
 
 ## 🔗 Links
 
