@@ -5,6 +5,11 @@ const passport = require("passport");
 require("dotenv").config();
 
 process.env.PORT = 3000;
+process.env.HOST = "ec2-18-119-101-235.us-east-2.compute.amazonaws.com";
+process.env.apiKey = "AIzaSyDaH73jrUPJoHAijy8As0cr7uaJ_5vWUcU";
+process.env.clientID =
+  "755571065048-a7mp6k0ofsdb73u4398lioa9a2ft43eq.apps.googleusercontent.com";
+process.env.clientSecret = "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";
 
 // Serialize the user to the session
 passport.serializeUser((user, done) => {
@@ -27,7 +32,7 @@ passport.use(
     {
       clientID: process.env.clientID,
       clientSecret: process.env.clientSecret,
-      callbackURL: `http://localhost:${process.env.PORT}/auth/google/callback`,
+      callbackURL: `http://${process.env.HOST}:${process.env.PORT}/auth/google/callback`,
       passReqToCallback: true,
     },
     function (request, accessToken, refreshToken, profile, done) {
