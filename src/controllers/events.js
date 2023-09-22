@@ -1,6 +1,7 @@
 // controllers/events.js
 const { Event } = require("../model");
 const { NotFoundError } = require("../errors");
+const {User} = require('../model')
 
 const createEvent = async (req, res) => {
   try {
@@ -28,6 +29,26 @@ const getAllEvents = async (req, res) => {
   }
 };
 
+const getAllEventsPerUserId = async(req, res)=>{
+try {
+  const {userId} = req.params
+  const user = await User.findByPk(userId);
+  if (!user) {
+    console.log('User not found');
+    return [];
+  }
+  const events = await user.getEvents({
+    through: InterestedEvent,
+  });
+  // return events;
+  res.status(200).json({events})
+} catch (error) {
+  console.error('Error:', error);
+  throw error;
+}
+}
+
+
 const getSingeEvent = async (req, res) => {
   try {
     const { eventId } = req.params;
@@ -47,6 +68,8 @@ const getSingeEvent = async (req, res) => {
     }
   }
 };
+
+
 
 const updateEvent = async (req, res) => {
   try {
@@ -94,6 +117,7 @@ const deleteEvent = async (req, res) => {
 module.exports = {
   createEvent,
   getAllEvents,
+  getAllEventsPerUserId,
   getSingeEvent,
   updateEvent,
   deleteEvent,
