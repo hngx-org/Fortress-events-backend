@@ -19,7 +19,7 @@ This document provides documentation for the API endpoints specified below.
 
 Create a new user record.
 
-- **URL**: `/login/google`
+- **URL**: `/auth/login/google`
 - **Method**: `GET`
 - **Request**: None
 
