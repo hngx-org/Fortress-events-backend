@@ -28,7 +28,7 @@ Create a new user record.
 
 Retrieve details of a specific user by their id.
 
-- **URL**: `/api/:user_id`
+- **URL**: `/api/users/:user_id`
 - **Method**: `GET`
 - **Request**: None
 - **Response**: If user exists, (Success - HTTP Status Code 200) and details of username searched, else (Failed - HTTP Status Code 400).
@@ -38,7 +38,7 @@ Retrieve details of a specific user by their id.
 
 Update the details of a specific user.
 
-- **URL**: `/api/:user_id` Where `:user_id` should be replaced with the **`CURRENT`** id of the already existing user.
+- **URL**: `/api/users/:user_id` Where `:user_id` should be replaced with the **`CURRENT`** id of the already existing user.
 - **Method**: `PUT`
 - **Request**:
 
