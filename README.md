@@ -7,9 +7,6 @@ Backend for the events mobile app. Built as part of the HNGx Internship by team 
   - [Project Configuration](#project-configuration)
 - [Getting Started](#getting-started-running-the-server)
   - [Tech Stack](#tech-stack)
-  - [Requirements](#requirements)
-  - [Running Locally](#running-locally)
-  - [Database SetUp](#database-setup) 
   - [Testing](#testing)
 - [Endpoints](#endpoints) 
   - [APIs](#apis) 
@@ -26,7 +23,7 @@ Backend for the events mobile app. Built as part of the HNGx Internship by team 
 
 The project is divided into:
 
-- Controller: found in `src/controller` folder. Coordinates the interaction between the UI and the backend services.
+- Controllers: found in `src/controller` folder. Coordinates the interaction between the UI and the backend services.
 
 - Middlewares: found in `src/middlewares` folder. Logic to process incoming HTTP requests and perform tasks such as authentication, validation, etc.
 
@@ -64,40 +61,6 @@ This project requires nodeJS version >= 14 and npm package manager.
    npm run build
    ```
 
-### 🗃️ Database SetUp
-
-This project uses MySQL for the database. Database Schema can be found in the Documentation section.
-**NOTE**: You need to setup a MySQL instance yourself, the default database name is: `fortress_db`. DB schemas are automatically synced
-
-#### Installing MySQL
-
-- Linux
-  ```bash
-  sudo apt update
-  sudo apt install mysql-server
-  ```
-- Windows
-  Read on the installation process [here](https://dev.mysql.com/downloads/installer/)
-
-#### Starting the MySQL Service
-
-```bash
-sudo systemctl start mysql
-sudo mysql
-```
-
-Then grant the necessary permissions through:
-
-```sql
-CREATE USER 'fortress'@'localhost' IDENTIFIED BY 'f0rtr355';
-
-GRANT ALL PRIVILEGES ON *.* TO 'fortress'@'localhost' WITH GRANT OPTION;
-
-FLUSH PRIVILEGES;
-
-exit
-```
-
 ### 💻 Testing
 
 Tests can be carried out locally by running:
@@ -106,12 +69,12 @@ Tests can be carried out locally by running:
 npm run test
 ```
 
-Alternatively, online API testing tools such as Postman can be used to test the endpoints.
+Alternatively, online API testing tools such as **Postman** can be used to test the endpoints.
 
 
 ## 🌐 Endpoints
 
-### APIs
+### apis
 
 The events app backend provides the following APIs:
 
@@ -145,7 +108,7 @@ The events app backend provides the following APIs:
 - Example request:
   ```json
   {
-    "name": "John Doe"
+    "name": "NAME"
   }
   ```
 
@@ -175,9 +138,8 @@ Documentation can be found in `/api-docs` endpoint.
 
 ## 🔗 Links
 
-* [Server URL]()
-* [Database Schema]()
+* [Server URL](http://ec2-18-119-101-235.us-east-2.compute.amazonaws.com:3000/)
 
 ## 🤝 The Team
 
-Built by team fortress. Team members can be found at [AUTHORS](/AUTHORS)
+Built by TEAM FORTRESS
