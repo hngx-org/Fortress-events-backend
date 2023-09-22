@@ -1,5 +1,3 @@
-// commentRoutes.js
-
 const express = require("express");
 const router = express.Router();
 const multer = require("multer");
@@ -8,6 +6,8 @@ const path = require("path");
 const {
   addImageToComment,
   getImageForComment,
+  addComment,
+  getComment,
 } = require("../controllers/comments");
 
 // Set up multer storage
@@ -25,30 +25,16 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-// POST /api/comments/:commentId/images
+// Middleware for handling image uploads
 router.post("/:commentId/images", upload.single("image"), addImageToComment);
 
-// GET /api/comments/:commentId/images
+// Middleware for getting images associated with a comment
 router.get("/:commentId/images", getImageForComment);
 
-//import controllers
-const {
-  getComment,
-  addComment,
-  getEventComment,
-  updateComment,
-  findCommentById,
-} = require("../controllers/comments");
-
-// Create a comment for an event
+// Route for adding a comment to an event
 router.post("/events/:eventId/comments", addComment);
 
-// Get comments for a specific event
-router.get("/events/:eventId/comments", getEventComment);
-router.get("/events/comments", getComment);
-router.get("/events/comments/:commentId", findCommentById);
-
-// Update a comment for an event
-router.put("/comments/:commentId", updateComment);
+// Route for getting all comments for an event
+router.get("/events/:eventId/comments", getComment);
 
 module.exports = router;
