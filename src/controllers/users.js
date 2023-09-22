@@ -11,8 +11,8 @@ const getAllUsers = async (req, res) => {
 };
 
 const getUser = async (req, res) => {
-  // Get groupId from params
-  const { userId } = req.params;
+  // Get userId from params
+  const userId = req.params.id;
 
   try {
     // Query the db to find the user using its id
