@@ -1,22 +1,24 @@
-
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const passport = require('../utils/passport');
+const passport = require("../utils/passport");
 
+router.get(
+  "/login/google",
+  passport.authenticate("google", {
+    scope: ["email", "profile"],
+  })
+);
 
-router.get('/login/google', passport.authenticate('google', {
-    scope: [ 'email', 'profile' ]
-  }));
-  
-  
-router.get('/google/callback',
-passport.authenticate('google', { failureRedirect: '/login', failureMessage: true }),
-function(req, res) {
+router.get(
+  "/google/callback",
+  passport.authenticate("google", {
+    failureRedirect: "/login",
+    failureMessage: true,
+  }),
+  function (req, res) {
     // Successful authentication, redirect home.
-    res.redirect('/');
-});
-  
-
-
+    res.redirect("/");
+  }
+);
 
 module.exports = router;
