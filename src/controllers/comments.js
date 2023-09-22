@@ -1,116 +1,247 @@
-
-const sequelize = require('sequelize');
-const { NotFoundError } = require('../errors');
+const sequelize = require("sequelize");
+const { NotFoundError } = require("../errors");
 const { Event, Comment, CommentImage, Image } = require("../model");
 const e = require("express");
 
-
-
 // add Comments
 const addComment = async (req, res) => {
-    const { eventId } = req.params;
-    // note: the usedId should come from the auth middleware
-    const { body, userId } = req.body; // seems the db is rejecting hardcoded values, so you should pass the userId from the req body
+  const body = req.body.body;
+  const eventId = req.params.eventId;
+  const userId = req.body.user_id;
+  const imageUrl = req.body.url;
 
-    // Check if the event exists
-    const eventExist = await Event.findOne({
-        where: { id: eventId },
+  await console.log(userId);
+
+  // Check if the event exists
+  const eventExist = await Event.findOne({
+    where: { id: eventId },
+  });
+
+  if (!eventExist) {
+    return res.status(404).json({ message: "Event not found" });
+  }
+
+  try {
+    let image = null;
+
+    // Check if an image URL is provided in the request body
+    if (imageUrl) {
+      // Create a new image record in the 'images' table
+      image = await Image.create({ url: imageUrl });
+    }
+
+    // Create a new comment using the Comment model
+    const newComment = await Comment.create({
+      body,
+      event_id: eventId,
+      user_id: userId,
     });
 
-    if (!eventExist) {
-        return res.status(404).json({ message: "Event not found" });
-    }
+    // Create a new CommentImage instance with specified attributes
+    const commentImage = new CommentImage({
+      comment_id: newComment.id,
+      image_id: image ? image.id : null,
+    });
 
-    try {
-        // Create a new comment using the Comment model
-        const newComment = await Comment.create({
-            body,
-            user_id: userId,
-            event_id: eventId,
-        });
+    // Save the commentImage object to the database
+    await commentImage.save();
 
-        return res.status(201).json({
-            message: "Comment created successfully",
-            newComment
-        });
-    } catch (error) {
-        console.error(error.message);
-        console.error(error.stack);
-        return res.status(500).json({ message: 'Internal server error' });
-    }
+    return res.status(201).json({
+      message: "Comment created successfully",
+      newComment,
+    });
+  } catch (error) {
+    console.error(error.message);
+    console.error(error.stack);
+    return res.status(500).json({ message: "Internal server error" });
+  }
 };
 
-
-//Get all comments 
+// Get all comments with optional image URLs
 const getComment = async (req, res) => {
-    try {
-        const comments = await Comment.findAll()
-        return res.status(200).json(comments)
-    } catch (error) {
-        console.log(error);
-        return res.status(500).json({ message: 'Internal server error' });
-    }
-}
+  try {
+    // Fetch all comments
+    const comments = await Comment.findAll();
 
-// get a single comment with comments id
-const findCommentById = async (req, res) => {
-    const { commentId } = req.params;
-    const comment = await Comment.findOne({
-        where: {id : commentId}
-    });
-    if (!comment) {
-        return res.status(404).send("No such comment")
-    };
-    return res.status(200).json({
-        comment
-    })
-}
+    // Create an array to store the formatted comments
+    const formattedComments = [];
 
+    // Iterate through each comment
+    for (const comment of comments) {
+      // Check if there's a matching CommentImage record
+      const commentImage = await CommentImage.findOne({
+        where: { comment_id: comment.id },
+      });
 
-// Get comment from an event by Id
-const getEventComment = async (req, res) => {
-    try {
-        const eventId = req.params.eventId;
+      // Create a formatted comment object
+      const formattedComment = {
+        id: comment.id,
+        body: comment.body,
+      };
 
-        // Find the event by ID and include associated comments
-        const event = await Event.findByPk(eventId, {
-            include: Comment,
-        });
-
-        if (!event) {
-            throw new NotFoundError("Event not found");
+      // If a matching CommentImage record is found, fetch the associated image URL
+      if (commentImage) {
+        const image = await Image.findByPk(commentImage.image_id);
+        if (image) {
+          formattedComment.imageUrl = image.url;
         }
-        return res.status(200).json(event.Comments);
+      }
 
-    } catch (error) {
-        console.error(error);
-        return res.status(404).json({ message: error.message });
+      formattedComments.push(formattedComment);
     }
+
+    return res.status(200).json(formattedComments);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+// Get a single comment by comment ID with optional image URL
+const findCommentById = async (req, res) => {
+  const { commentId } = req.params;
+
+  try {
+    // Fetch the comment by ID
+    const comment = await Comment.findOne({
+      where: { id: commentId },
+    });
+
+    if (!comment) {
+      return res.status(404).send("No such comment");
+    }
+
+    // Check if there's a matching CommentImage record
+    const commentImage = await CommentImage.findOne({
+      where: { comment_id: comment.id },
+    });
+
+    // Create the formatted response
+    const formattedComment = {
+      id: comment.id,
+      body: comment.body,
+      // ... other comment properties you want to include
+    };
+
+    // If a matching CommentImage record is found, fetch the associated image URL
+    if (commentImage) {
+      const image = await Image.findByPk(commentImage.image_id);
+      if (image) {
+        formattedComment.imageUrl = image.url;
+      }
+    }
+
+    return res.status(200).json({ comment: formattedComment });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+// Get comments from an event by event ID with optional image URLs
+const getEventComment = async (req, res) => {
+  try {
+    const eventId = req.params.eventId;
+
+    // Find the event by ID and include associated comments
+    const event = await Event.findByPk(eventId, {
+      include: Comment,
+    });
+
+    if (!event) {
+      throw new NotFoundError("Event not found");
+    }
+
+    // Extract comments from the event
+    const comments = event.Comments || [];
+
+    // Create an array to store the formatted comments
+    const formattedComments = [];
+
+    // Iterate through each comment
+    for (const comment of comments) {
+      // Check if there's a matching CommentImage record
+      const commentImage = await CommentImage.findOne({
+        where: { comment_id: comment.id },
+      });
+
+      // Create the formatted comment object
+      const formattedComment = {
+        id: comment.id,
+        body: comment.body,
+        // ... other comment properties you want to include
+      };
+
+      // If a matching CommentImage record is found, fetch the associated image URL
+      if (commentImage) {
+        const image = await Image.findByPk(commentImage.image_id);
+        if (image) {
+          formattedComment.imageUrl = image.url;
+        }
+      }
+
+      formattedComments.push(formattedComment);
+    }
+
+    return res.status(200).json(formattedComments);
+  } catch (error) {
+    console.error(error);
+    return res.status(404).json({ message: error.message });
+  }
 };
 
 const updateComment = async (req, res) => {
-    try {
-        const commentId = req.params.commentId;
-        const { body } = req.body;
+  try {
+    const commentId = req.params.commentId;
+    const { body, imageUrl } = req.body;
 
-        // Find the comment by ID
-        const comment = await Comment.findByPk(commentId);
+    // Find the comment by ID
+    const comment = await Comment.findByPk(commentId);
 
-        if (!comment) {
-            return res.status(404).json({ message: 'Comment not found' });
-        }
-
-        // Update the comment's body
-        comment.body = body;
-        await comment.save();
-
-        return res.status(200).json(comment);
-    } catch (error) {
-        console.error(error);
-        return res.status(500).json({ message: 'Internal server error' });
+    if (!comment) {
+      return res.status(404).json({ message: "Comment not found" });
     }
-}
 
+    // Get the existing userId from the comment
+    const userId = comment.user_id;
+
+    // Update the comment's body
+    comment.body = body;
+
+    // Explicitly set the userId to the existing userId
+    comment.user_id = userId;
+
+    await comment.save();
+
+    // Check if an image URL is provided
+    if (imageUrl) {
+      let commentImage = await CommentImage.findOne({
+        where: { comment_id: comment.id },
+      });
+
+      // Create a new image record if it doesn't exist
+      if (!commentImage) {
+        const image = await Image.create({ url: imageUrl });
+        commentImage = await CommentImage.create({
+          comment_id: comment.id,
+          image_id: image.id,
+        });
+      } else {
+        // Update the existing image record
+        const image = await Image.findByPk(commentImage.image_id);
+        if (image) {
+          image.url = imageUrl;
+          await image.save();
+        }
+      }
+    }
+
+    return res.status(200).json(comment);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
 
 // Function to add an image to a comment
 async function addImageToComment(req, res) {
@@ -215,9 +346,8 @@ module.exports = {
   addImageToComment,
   getImageForComment,
   getEventComment,
-    addComment,
-    getComment,
-    updateComment,
-    findCommentById,
+  addComment,
+  getComment,
+  updateComment,
+  findCommentById,
 };
-
