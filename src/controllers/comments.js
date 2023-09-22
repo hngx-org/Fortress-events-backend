@@ -169,7 +169,6 @@ async function getImageForComment(req, res) {
       res.status(404).json({ message: "No image found for this comment" });
       return; // Exit the function
     }
-
     // Access the image URL from the associated image
     const imageUrl = commentImage.image.imageUrl; // Adjust this based on your model structure
 

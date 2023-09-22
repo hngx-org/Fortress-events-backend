@@ -1,8 +1,7 @@
 const sequelize = require("sequelize");
 const { Event, InterestedEvent, User } = require("../model");
 const { NotFoundError } = require("../errors");
-const { Op } = require('sequelize');
-
+const { Op } = require("sequelize");
 
 const expressInterest = async (req, res) => {
   try {
@@ -21,7 +20,6 @@ const expressInterest = async (req, res) => {
     console.log(error);
   }
 };
-
 
 const getInterest = async (req, res) => {
   try {
@@ -43,25 +41,14 @@ const deleteInterest = async (req, res) => {
     await InterestedEvent.destroy({
       where: {
         // Use Sequelize's operators and logical operators to combine conditions
-        [Op.and]: [
-          { user_id: userId },
-          { event_id: eventId }
-        ]
-      }
-    })
+        [Op.and]: [{ user_id: userId }, { event_id: eventId }],
+      },
+    });
 
     return res.status(200).json({ message: "Interest deleted successfully" });
-
-
   } catch (error) {
-    return res.status(500).json({ message: err })
+    return res.status(500).json({ message: err });
   }
-}
-
+};
 
 module.exports = { expressInterest, getInterest, deleteInterest };
-
-
-
-
-
