@@ -12,11 +12,11 @@ const getAllUsers = async (req, res) => {
 
 const getUser = async (req, res) => {
   // Get userId from params
-  const userId = req.params.id;
+  const {id} = req.params;
 
   try {
     // Query the db to find the user using its id
-    const user = await User.findByPk(userId);
+    const user = await User.findByPk(id);
 
     // return 404 response if group does not exist
     if (!user) {
