@@ -11,7 +11,7 @@ const expressInterest = async (req, res) => {
       where: { user_id: userId, event_id: eventId },
     });
     if (existingInterest) {
-      throw new Error("User is already interested in this event");
+      throw new NotFoundError("User is already interested in this event");
     }
     //create interest in an event
     await InterestedEvent.create({ user_id: userId, event_id: eventId });
