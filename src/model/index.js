@@ -157,6 +157,7 @@ const CommentImage = sequelize.define(
         model: "Comment",
         key: "id",
       },
+      primaryKey: true,
     },
     image_id: {
       type: UUID,
