@@ -9,6 +9,26 @@ const getAllUsers = async (req, res) => {
     return res.status(500).json({ error: error.message });
   }
 };
+
+const getUser = async (req, res) => {
+  // Get groupId from params
+  const { id } = req.params.userId;
+
+  try {
+    // Query the db to find the user using its id
+    const user = await User.findByPk(id);
+
+    // return 404 response if group does not exist
+    if (!user) {
+      res.status(404).json({ message: "User not found" });
+    }
+    // If user exists, send success response
+    return res.status(200).json({ user });
+  } catch (error) {
+    console.error(`error fetching group details: ${error}`);
+  }
+};
+
 // updating a singleuser profile by id(pk)
 const updateSignleUserProfile = async (req, res) => {
   try {
@@ -32,4 +52,5 @@ const updateSignleUserProfile = async (req, res) => {
 module.exports = {
   getAllUsers,
   updateSignleUserProfile,
+  getUser,
 };
