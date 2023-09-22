@@ -6,6 +6,7 @@ const {
   getSingeEvent,
   updateEvent,
   deleteEvent,
+  addEventComment,
 } = require("../controllers/events");
 
 router.route("/events").get(getAllEvents).post(createEvent);
@@ -15,5 +16,8 @@ router
   .get(getSingeEvent)
   .put(updateEvent)
   .delete(deleteEvent);
+
+router
+  .post("/:eventsId/comment", addEventComment);
 
 module.exports = router;
