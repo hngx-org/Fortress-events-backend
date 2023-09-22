@@ -32,7 +32,7 @@ passport.use(
     {
       clientID: process.env.clientID,
       clientSecret: process.env.clientSecret,
-      callbackURL: `http://${process.env.HOST}:${process.env.PORT}/auth/google/callback`,
+      callbackURL: `http://ec2-18-119-101-235.us-east-2.compute.amazonaws.com:3000/auth/google/callback`,
       passReqToCallback: true,
     },
     function (request, accessToken, refreshToken, profile, done) {
