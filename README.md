@@ -38,40 +38,6 @@ The project is divided into:
    npm run build
    ```
 
-## 🗃️ Database SetUp
-
-This project uses MySQL for the database. Database Schema can be found in the Documentation section.
-**NOTE**: You need to setup a MySQL instance yourself, the default database name is: `fortress_db`. DB schemas are automatically synced
-
-### Installing MySQL
-
-- Linux
-  ```bash
-  sudo apt update
-  sudo apt install mysql-server
-  ```
-- Windows
-  Read on the installation process [here](https://dev.mysql.com/downloads/installer/)
-
-### Starting the MySQL Service
-
-```bash
-sudo systemctl start mysql
-sudo mysql
-```
-
-Then:
-
-```sql
-CREATE USER 'fortress'@'localhost' IDENTIFIED BY 'f0rtr355';
-
-GRANT ALL PRIVILEGES ON *.* TO 'fortress'@'localhost' WITH GRANT OPTION;
-
-FLUSH PRIVILEGES;
-
-exit
-```
-
 ## 🌐 Endpoints
 
 - POST `/api/users/register` -> User registration
@@ -138,7 +104,7 @@ This project uses the MIT License as found in [LICENSE](/LICENSE)
 
 ## 📖 Documentation
 
-Documentation can be found [here](/)
+Documentation can be found [here](https://github.com/hngx-org/Fortress-events-backend/tree/main/routeDocs)
 
 ## 🔗 Links
 
