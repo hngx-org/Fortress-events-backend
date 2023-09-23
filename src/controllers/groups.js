@@ -122,6 +122,8 @@ const getAllEventFromGroup = async (req, res) => {
   }
 };
 
+//post above
+
 const getAllUserFromGroup = async (req, res) => {
   try {
     const { groupId } = req.params;
@@ -147,7 +149,7 @@ const addUserToGroup = async (req, res) => {
     const user = await User.findByPk(user_id);
 
     if (!group || !user) {
-      return res.status(400).json({ message: "Invalid group or user" });
+      throw new NotFoundError("Invalid group or user");
     }
 
     const userGroup = await UserGroup.create({

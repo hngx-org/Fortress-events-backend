@@ -1,6 +1,8 @@
 const { Event, User } = require("../model");
 const { NotFoundError } = require("../errors");
 
+//grab specific user
+
 const createEvent = async (req, res) => {
   try {
     const event = await Event.create({ ...req.body });
