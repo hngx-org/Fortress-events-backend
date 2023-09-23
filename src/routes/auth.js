@@ -9,7 +9,9 @@ router.get(
   })
 );
 
-// /logout kill session
+router.get("/login", (req, res) => {
+  res.redirect("/auth/login/google");
+});
 
 router.get(
   "/google/callback",

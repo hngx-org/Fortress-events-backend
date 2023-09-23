@@ -1,4 +1,31 @@
 const { User } = require("../model");
+const session = require("express-session");
+const { request } = require("express");
+
+// create user from auth
+const createUser = async (req, res) => {
+  try {
+    const { displayName, email, photoUrl } = req.body;
+
+    if (!displayName || !email || !photoUrl) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+    const newuser = await User.findOrCreate({
+      where: { email },
+      defaults: {
+        name: displayName,
+        avatar: photoUrl,
+      },
+    });
+
+    req.session.user = newuser[0];
+
+    return res.status(201).json(newuser[0]);
+  } catch (error) {
+    console.error(`Error creating user: ${error}`);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+};
 
 const getAllUsers = async (req, res) => {
   try {
@@ -58,4 +85,5 @@ module.exports = {
   getAllUsers,
   updateSingleUserProfile,
   getUser,
+  createUser,
 };

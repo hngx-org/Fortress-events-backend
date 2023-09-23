@@ -37,7 +37,9 @@ const addComment = async (req, res) => {
     });
 
     // Save the commentImage object to the database
-    await commentImage.save();
+    if (image) {
+      await commentImage.save();
+    }
 
     return res.status(201).json({
       message: "Comment created successfully",

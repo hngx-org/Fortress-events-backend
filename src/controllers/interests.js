@@ -1,5 +1,4 @@
 const { Event, InterestedEvent, User } = require("../model");
-const { NotFoundError } = require("../errors");
 const { Op } = require("sequelize");
 
 const expressInterest = async (req, res) => {
@@ -10,7 +9,7 @@ const expressInterest = async (req, res) => {
       where: { user_id: userId, event_id: eventId },
     });
     if (existingInterest) {
-      throw new NotFoundError("User is already interested in this event");
+      return res.status(403).json({ message: "Interest already exists" });
     }
     // Create interest in an event
     await InterestedEvent.create({ user_id: userId, event_id: eventId });
