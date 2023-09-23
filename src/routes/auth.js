@@ -9,6 +9,8 @@ router.get(
   })
 );
 
+// /logout kill session
+
 router.get(
   "/google/callback",
   passport.authenticate("google", {

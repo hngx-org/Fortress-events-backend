@@ -49,6 +49,7 @@ readdirSync("./src/routes").map((path) => {
   app.use("/auth", require(`./src/routes/${path}`));
 });
 
+//pass in auth middleware
 app.get("/", (req, res) => {
   return req.user
     ? res.send(req.user)

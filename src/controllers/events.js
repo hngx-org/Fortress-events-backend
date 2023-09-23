@@ -1,7 +1,19 @@
 const { Event, User } = require("../model");
 const { NotFoundError } = require("../errors");
-
+//unauthentication...
 //grab specific user
+const user = req.user;
+const userId = user.id;
+// find user
+const userExist = await User.findOne({
+  where: {
+    id: userId,
+  },
+});
+// throw an error if user does not exist
+if (!userExist) {
+  return res.status(404).json({ message: "invalid credentials" });
+}
 
 const createEvent = async (req, res) => {
   try {
