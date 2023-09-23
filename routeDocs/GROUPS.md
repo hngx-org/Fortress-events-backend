@@ -8,6 +8,8 @@ This document provides documentation for the API endpoints specified below.
 
   - [Get Group by Id](#get-Groups-by-Id)
   - [Get All Groups](#get-all-Groups)
+  - [Get All users for a particular group](#get-all-group-users)
+  - [Get All events for a particular group](#get-all-group-events)
   - [Create Group](#create-Group)
   - [Create user in Group](#create-user-Group)
   - [Update Group](#update-Group)
@@ -34,6 +36,24 @@ Retrieve details of all groups.
 - **Method**: `GET`
 - **Request**: None
 - **Response**: Array/List of Group objects
+
+### Get all group users
+
+Retrieve details of all group users.
+
+- **URL**: `/api/:groupId/users`
+- **Method**: `GET`
+- **Request**: None
+- **Response**: Array/List of user objects
+
+### Get all group events
+
+Retrieve details of all group events.
+
+- **URL**: `/api/:groupId/events`
+- **Method**: `GET`
+- **Request**: None
+- **Response**: Array/List of user objects
 
 ### Update Group
 
