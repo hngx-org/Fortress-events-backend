@@ -11,24 +11,19 @@ const {
   deleteGroupMemberById,
   addUserToGroup,
   getAllUserFromGroup,
-  getAllEventFromGroup
+  getAllEventFromGroup,
 } = require("../controllers/groups");
 
 // Get group details
-router.route("/groups")
-  .post(createGroup)
-  .get(getAllGroups);
-router.route("/groups/:groupId")
+router.route("/groups").post(createGroup).get(getAllGroups);
+router
+  .route("/groups/:groupId")
   .get(getGroupDetails)
   .put(updateGroupDetails)
-  .delete(deleteGroup)
-router.route("/groupId/:userId")
-  .delete(deleteGroupMemberById);
-router.route('/groups/:groupId')
-  .post(addUserToGroup);
-router.route('/:groupId/events')
-  .get(getAllEventFromGroup)
-router.route('/:groupId/users')
-  .get(getAllUserFromGroup)
+  .delete(deleteGroup);
+router.route("/groupId/:userId").delete(deleteGroupMemberById);
+router.route("/groups/:groupId").post(addUserToGroup);
+router.route("/:groupId/events").get(getAllEventFromGroup);
+router.route("/:groupId/users").get(getAllUserFromGroup);
 
 module.exports = router;
