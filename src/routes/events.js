@@ -1,5 +1,7 @@
 const express = require("express");
 const router = express.Router();
+const ensureAuthenticated = require("../middlewares/isloggedin");
+// router.use("/events", ensureAuthenticated);
 const {
   createEvent,
   getAllEvents,
@@ -17,5 +19,5 @@ router
   .put(updateEvent)
   .delete(deleteEvent);
 
-router.route("/api/events/:userId").get(getAllEventsPerUserId);
+router.route("/:userId/events").get(getAllEventsPerUserId);
 module.exports = router;

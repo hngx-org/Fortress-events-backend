@@ -1,14 +1,18 @@
-const { Event, User, InterestedEvent } = require("../model");
+const { Event, User, InterestedEvent, GroupEvent } = require("../model");
 const { NotFoundError } = require("../errors");
 
 const createEvent = async (req, res) => {
   try {
     const event = await Event.create({ ...req.body });
-    const response = req.body
+    const response = req.body;
     if (event) {
-      return res
-        .status(201)
-        .json({ event });
+      if (req.body.group_Id) {
+        const newGroupEvent = await GroupEvent.create({
+          group_id: req.body.group_Id,
+          event_id: event.id,
+        });
+      }
+      return res.status(201).json({ event });
     }
   } catch (error) {
     console.error(error);
@@ -33,7 +37,7 @@ const getAllEvents = async (req, res) => {
 const getAllEventsPerUserId = async (req, res) => {
   try {
     const { userId } = req.params;
-    const id = userId
+
     const events = await User.findByPk(userId, {
       include: [
         {
@@ -43,7 +47,7 @@ const getAllEventsPerUserId = async (req, res) => {
           },
         },
       ],
-    })
+    });
     res.status(200).json({ events });
   } catch (error) {
     console.error("Error:", error);

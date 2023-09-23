@@ -1,6 +1,7 @@
 const { Group, User, Event, UserGroup, GroupEvent } = require("../model/index");
 const { NotFoundError } = require("../errors");
 
+// Create a new group
 const createGroup = async (req, res) => {
   try {
     const group = await Group.create({ ...req.body });
@@ -13,6 +14,7 @@ const createGroup = async (req, res) => {
   }
 };
 
+// Get all groups
 const getAllGroups = async (req, res) => {
   try {
     const groups = await Group.findAll({
@@ -27,9 +29,9 @@ const getAllGroups = async (req, res) => {
   }
 };
 
+// Get group details by ID
 const getGroupDetails = async (req, res) => {
   const { groupId } = req.params;
-
   try {
     const group = await Group.findByPk(groupId);
 
@@ -44,9 +46,9 @@ const getGroupDetails = async (req, res) => {
   }
 };
 
+// Update group details by ID
 const updateGroupDetails = async (req, res) => {
   const { groupId } = req.params;
-
   try {
     const group = await Group.findByPk(groupId);
 
@@ -63,9 +65,9 @@ const updateGroupDetails = async (req, res) => {
   }
 };
 
+// Delete group by ID
 const deleteGroup = async (req, res) => {
   const { groupId } = req.params;
-
   try {
     const group = await Group.findByPk(groupId);
 
@@ -82,6 +84,7 @@ const deleteGroup = async (req, res) => {
   }
 };
 
+// Delete a group member by user ID
 const deleteGroupMemberById = async (req, res) => {
   try {
     const { userId } = req.params;
@@ -106,6 +109,7 @@ const deleteGroupMemberById = async (req, res) => {
   }
 };
 
+// Get all events from a group by ID
 const getAllEventFromGroup = async (req, res) => {
   try {
     const { groupId } = req.params;
@@ -122,8 +126,7 @@ const getAllEventFromGroup = async (req, res) => {
   }
 };
 
-//post above
-
+// Get all users from a group by ID
 const getAllUserFromGroup = async (req, res) => {
   try {
     const { groupId } = req.params;
@@ -140,6 +143,7 @@ const getAllUserFromGroup = async (req, res) => {
   }
 };
 
+// Add a user to a group
 const addUserToGroup = async (req, res) => {
   try {
     const { groupId } = req.params;
