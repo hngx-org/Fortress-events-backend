@@ -9,6 +9,7 @@ This document provides documentation for the API endpoints specified below.
   - [Get Event by Id](#get-Events-by-Id)
   - [Get All Events](#get-all-Events)
   - [Get All Events for a particular group](#get-all-Events-for-group)
+  - [Get All Events for a particular user](#get-all-Events-for-user)
   - [Create Event](#create-Event)
   - [Update Event](#update-Event)
   - [Delete Event](#delete-Event)
@@ -41,6 +42,15 @@ Retrieve details of all events for a particular group.
 - **URL**: `/api/events/:groupId`
 - **Method**: `GET`
 - **Request Params**: groupId
+- **Response**: Array/List of Event objects
+
+### Get all Events for user
+
+Retrieve details of all events for a particular user.
+
+- **URL**: `/api/events/:userId`
+- **Method**: `GET`
+- **Request Params**: userId
 - **Response**: Array/List of Event objects
 
 
