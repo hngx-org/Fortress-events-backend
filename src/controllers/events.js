@@ -24,7 +24,7 @@ const getAllEvents = async (req, res) => {
   try {
     const events = await Event.findAll({
       order: [["start_date", "DESC"]],
-      limit: 20,
+      limit: 50,
       attributes: {
         exclude: [{ start_date: "null" }],
       },
