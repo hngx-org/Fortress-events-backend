@@ -13,9 +13,9 @@ const getLike = async (req, res) => {
       throw new NotFoundError("Like not found");
     }
 
-    res.status(200).json({ like: like });
+    res.status(200).json({ like });
   } catch (error) {
-    console.log("Error", error);
+    console.error("Error:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 };
@@ -44,7 +44,8 @@ const removeLike = async (req, res) => {
 
     res.status(200).json({ message: "Like removed successfully" });
   } catch (error) {
-    console.error(error);
+    console.error("Error:", error);
+
     if (error instanceof NotFoundError) {
       res.status(404).json({ error: error.message });
     } else {

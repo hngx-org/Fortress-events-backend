@@ -1,27 +1,20 @@
-const sequelize = require("sequelize");
 const { NotFoundError } = require("../errors");
 const { Event, Comment, CommentImage, Image } = require("../model");
-const e = require("express");
 
-// add Comments
+// Add Comments
 const addComment = async (req, res) => {
   const body = req.body.body;
   const eventId = req.params.eventId;
   const userId = req.body.user_id;
   const imageUrl = req.body.url;
 
-  await console.log(userId);
-
-  // Check if the event exists
-  const eventExist = await Event.findOne({
-    where: { id: eventId },
-  });
-
-  if (!eventExist) {
-    return res.status(404).json({ message: "Event not found" });
-  }
-
   try {
+    // Check if the event exists
+    const eventExist = await Event.findByPk(eventId);
+    if (!eventExist) {
+      return res.status(404).json({ message: "Event not found" });
+    }
+
     let image = null;
 
     // Check if an image URL is provided in the request body
@@ -51,8 +44,7 @@ const addComment = async (req, res) => {
       newComment,
     });
   } catch (error) {
-    console.error(error.message);
-    console.error(error.stack);
+    console.error("Error:", error);
     return res.status(500).json({ message: "Internal server error" });
   }
 };
@@ -92,7 +84,7 @@ const getComment = async (req, res) => {
 
     return res.status(200).json(formattedComments);
   } catch (error) {
-    console.log(error);
+    console.error("Error:", error);
     return res.status(500).json({ message: "Internal server error" });
   }
 };
@@ -103,12 +95,10 @@ const findCommentById = async (req, res) => {
 
   try {
     // Fetch the comment by ID
-    const comment = await Comment.findOne({
-      where: { id: commentId },
-    });
+    const comment = await Comment.findByPk(commentId);
 
     if (!comment) {
-      return res.status(404).send("No such comment");
+      return res.status(404).json({ message: "Comment not found" });
     }
 
     // Check if there's a matching CommentImage record
@@ -133,7 +123,7 @@ const findCommentById = async (req, res) => {
 
     return res.status(200).json({ comment: formattedComment });
   } catch (error) {
-    console.log(error);
+    console.error("Error:", error);
     return res.status(500).json({ message: "Internal server error" });
   }
 };
@@ -185,7 +175,7 @@ const getEventComment = async (req, res) => {
 
     return res.status(200).json(formattedComments);
   } catch (error) {
-    console.error(error);
+    console.error("Error:", error);
     return res.status(500).json({ message: "Internal server error" });
   }
 };
@@ -238,7 +228,7 @@ const updateComment = async (req, res) => {
 
     return res.status(200).json(comment);
   } catch (error) {
-    console.error(error);
+    console.error("Error:", error);
     return res.status(500).json({ message: "Internal server error" });
   }
 };
@@ -266,7 +256,7 @@ async function addImageToComment(req, res) {
     await comment.save();
 
     // Send a successful response
-    res.status(201).json({ imageUrl: imageUrl });
+    res.status(201).json({ imageUrl });
   } catch (error) {
     console.error("Error adding image to comment:", error);
 
@@ -339,8 +329,6 @@ async function getImageForComment(req, res) {
     }
   }
 }
-
-// get all comments and get the image url if there is one
 
 module.exports = {
   addImageToComment,

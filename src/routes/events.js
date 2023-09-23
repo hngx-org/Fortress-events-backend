@@ -3,7 +3,8 @@ const router = express.Router();
 const {
   createEvent,
   getAllEvents,
-  getSingeEvent,
+  getAllEventsPerUserId,
+  getSingleEvent,
   updateEvent,
   deleteEvent,
 } = require("../controllers/events");
@@ -12,8 +13,9 @@ router.route("/events").get(getAllEvents).post(createEvent);
 
 router
   .route("/events/:eventId")
-  .get(getSingeEvent)
+  .get(getSingleEvent)
   .put(updateEvent)
   .delete(deleteEvent);
 
+router.route("/api/events/:userId").get(getAllEventsPerUserId);
 module.exports = router;

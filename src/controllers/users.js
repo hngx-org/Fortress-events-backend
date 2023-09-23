@@ -1,56 +1,61 @@
 const { User } = require("../model");
-const sequelize = require("sequelize");
 
 const getAllUsers = async (req, res) => {
   try {
     const users = await User.findAll();
     return res.status(200).json({ users });
   } catch (error) {
-    return res.status(500).json({ error: error.message });
+    console.error(`Error fetching all users: ${error}`);
+    return res.status(500).json({ error: "Internal server error" });
   }
 };
 
 const getUser = async (req, res) => {
   // Get userId from params
-  const {id} = req.params;
+  const { id } = req.params;
 
   try {
     // Query the db to find the user using its id
     const user = await User.findByPk(id);
 
-    // return 404 response if group does not exist
+    // Return 404 response if user does not exist
     if (!user) {
-      res.status(404).json({ message: "User not found" });
+      return res.status(404).json({ message: "User not found" });
     }
     // If user exists, send success response
     return res.status(200).json({ user });
   } catch (error) {
-    console.error(`error fetching group details: ${error}`);
+    console.error(`Error fetching user details: ${error}`);
+    return res.status(500).json({ error: "Internal server error" });
   }
 };
 
-// updating a singleuser profile by id(pk)
-const updateSignleUserProfile = async (req, res) => {
+// Updating a single user profile by id (pk)
+const updateSingleUserProfile = async (req, res) => {
   try {
     const id = req.params.userId;
     const updateProfile = await User.findByPk(id);
+
     if (!updateProfile) {
-      return res.status(404).json({ message: "User not found", status: 404 });
+      return res.status(404).json({ message: "User not found" });
     }
+
     const { name, email, avatar } = req.body;
     updateProfile.name = name;
     updateProfile.email = email;
     updateProfile.avatar = avatar;
+
     await updateProfile.save();
-    res.status(200).json({ updateProfile });
+
+    return res.status(204).send(); // Use 204 for a successful update with no content
   } catch (error) {
-    console.log(error);
-    return res.status(404).json({ error: error.message });
+    console.error(`Error updating user profile: ${error}`);
+    return res.status(500).json({ error: error.message });
   }
 };
 
 module.exports = {
   getAllUsers,
-  updateSignleUserProfile,
+  updateSingleUserProfile,
   getUser,
 };

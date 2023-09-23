@@ -1,4 +1,3 @@
-const sequelize = require("sequelize");
 const { Event, InterestedEvent, User } = require("../model");
 const { NotFoundError } = require("../errors");
 const { Op } = require("sequelize");
@@ -6,32 +5,34 @@ const { Op } = require("sequelize");
 const expressInterest = async (req, res) => {
   try {
     const { eventId, userId } = req.params;
-    //check if user is already interested in an event
+    // Check if user is already interested in an event
     const existingInterest = await InterestedEvent.findOne({
       where: { user_id: userId, event_id: eventId },
     });
     if (existingInterest) {
       throw new NotFoundError("User is already interested in this event");
     }
-    //create interest in an event
+    // Create interest in an event
     await InterestedEvent.create({ user_id: userId, event_id: eventId });
     return res.status(201).json({ message: "Interest created" });
   } catch (error) {
-    console.log(error);
+    console.error(`Error creating interest: ${error}`);
+    return res.status(500).json({ error: "Internal server error" });
   }
 };
 
 const getInterest = async (req, res) => {
   try {
     const { eventId } = req.params;
-    //check if user is already interested in an event
+    // Retrieve interests for an event
     const interests = await InterestedEvent.findAll({
       where: { event_id: eventId },
     });
 
-    return res.status(201).send(interests);
+    return res.status(200).json(interests);
   } catch (error) {
-    console.log(error);
+    console.error(`Error retrieving interests: ${error}`);
+    return res.status(500).json({ error: "Internal server error" });
   }
 };
 
@@ -47,7 +48,8 @@ const deleteInterest = async (req, res) => {
 
     return res.status(200).json({ message: "Interest deleted successfully" });
   } catch (error) {
-    return res.status(500).json({ message: err });
+    console.error(`Error deleting interest: ${error}`);
+    return res.status(500).json({ error: "Internal server error" });
   }
 };
 
