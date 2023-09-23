@@ -5,10 +5,11 @@ This document provides documentation for the API endpoints specified below.
 ## Table of Contents
 
 - [User Endpoints](#user-endpoints)
-
+    
   - [Get User by Id](#get-user-by-Id)
   - [Update User](#update-user)
   - [Login](#login-user)
+  - [Logout](#logout-user)
 
 ---
 
@@ -17,11 +18,27 @@ This document provides documentation for the API endpoints specified below.
 
 ### Login User
 
-Create a new user record.
+Create a new user record or Login if exists.
 
-- **URL**: `/auth/login/google`
-- **Method**: `GET`
-- **Request**: None
+- **URL**: `/users`
+- **Method**: `POST`
+- **Request**:
+
+  ```json
+  {
+    "displayName": "updated name",
+    "email": "your_email@yahoo.com",
+    "photoUrl": "stringOfUrl.com"
+  }
+  ```
+- **Response**: If successfully updated, (Success - HTTP Status Code 200) and details of new user is returned, else (Failed - HTTP Status Code 400)
+  ```json
+   {
+    "name": "your_name",
+    "email": "your_email",
+    "avatar": "your avatar url"
+  }
+  ```
 
 
 ### Get User By Id
@@ -58,3 +75,11 @@ Update the details of a specific user.
   }
   ```
 
+### Logout User
+
+Retrieve details of a specific user by their id.
+
+- **URL**: `/logout`
+- **Method**: `GET`
+- **Request**: None
+- **Response**: 'string'

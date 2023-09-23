@@ -48,7 +48,7 @@ Retrieve details of all events for a particular group.
 
 Retrieve details of all events for a particular user.
 
-- **URL**: `/api/events/:userId`
+- **URL**: `/api/:userId/events`
 - **Method**: `GET`
 - **Request Params**: userId
 - **Response**: Array/List of Event objects
@@ -95,6 +95,7 @@ Create an event.
   "end_date": "end_date",
   "start_time": "start_time",
   "end_time": "end_time",
+  "group_id":"group_id"
     }
   ```
 - **Response**: Created Event Object

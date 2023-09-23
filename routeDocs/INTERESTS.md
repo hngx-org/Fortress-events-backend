@@ -17,16 +17,16 @@ This document provides documentation for the API endpoints specified below.
 
 Retrieve details of all Interests for a particular event.
 
-- **URL**: `/api/events/:groupId`
+- **URL**: `/api/events/:eventId`
 - **Method**: `GET`
-- **Request Params**: groupId
+- **Request Params**: eventId
 - **Response**: Array/List of Interest objects
 
 ### Create Interest
 
 Create an Interest.
 
-- **URL**: `/api/users/:userId/interests/:eventId`
+- **URL**: `/api/users/:userId/interest/:eventId`
 - **Method**: `POST`
 - **Request params**: userId, eventId
 - **Response**: Not sure lol but status code of good.
