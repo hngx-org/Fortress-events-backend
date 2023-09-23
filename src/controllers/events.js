@@ -23,8 +23,10 @@ const createEvent = async (req, res) => {
 const getAllEvents = async (req, res) => {
   try {
     const events = await Event.findAll({
+      order: [["start_date", "DESC"]],
+      limit: 20,
       attributes: {
-        exclude: ["createdAt", "updatedAt"],
+        exclude: [{ start_date: "null" }],
       },
     });
     res.status(200).json({ data: events });
