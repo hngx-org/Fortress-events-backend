@@ -1,4 +1,10 @@
-const { Event, User, InterestedEvent, GroupEvent } = require("../model");
+const {
+  Event,
+  User,
+  InterestedEvent,
+  GroupEvent,
+  Comment,
+} = require("../model");
 const { NotFoundError } = require("../errors");
 
 const createEvent = async (req, res) => {
@@ -57,6 +63,37 @@ const getAllEventsPerUserId = async (req, res) => {
   }
 };
 
+// Get all users interested Users for an event by ID
+const getNumUserFromEvent = async (req, res) => {
+  try {
+    const { eventId } = req.params;
+    // Use Sequelize aggregation to count interested users for the specified event
+    const interestedUsersCount = await InterestedEvent.count({
+      where: { event_id: eventId },
+    });
+    res.status(200).json({ interestedUsersCount });
+  } catch (error) {
+    console.error("Error fetching interested users count:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+// number of comments for event
+// Get all users interested Users for an event by ID
+const getNumCommentForEvent = async (req, res) => {
+  try {
+    const { eventId } = req.params;
+    // Use Sequelize aggregation to count interested users for the specified event
+    const commentedUsersCount = await Comment.count({
+      where: { event_id: eventId },
+    });
+    res.status(200).json({ commentedUsersCount });
+  } catch (error) {
+    console.error("Error fetching interested users count:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
 const getSingleEvent = async (req, res) => {
   try {
     const { eventId } = req.params;
@@ -109,4 +146,6 @@ module.exports = {
   getSingleEvent,
   updateEvent,
   deleteEvent,
+  getNumUserFromEvent,
+  getNumCommentForEvent,
 };
