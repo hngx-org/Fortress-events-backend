@@ -53,10 +53,10 @@ const Event = sequelize.define(
         key: "id",
       },
     },
-    start_date: {
+    created_at: {
       type: DATE,
     },
-    end_date: {
+    updated_at: {
       type: DATE,
     },
     start_time: {
