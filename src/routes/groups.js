@@ -11,7 +11,7 @@ const {
   deleteGroupMemberById,
   addUserToGroup,
   getAllUserFromGroup,
-  getAllEventFromGroup,
+  getAllEventFromAGroup,
   getEventNumFromGroup,
   getNumUserFromGroup,
 } = require("../controllers/groups");
@@ -26,7 +26,7 @@ router
 router.route("/groupId/:userId").delete(deleteGroupMemberById);
 router.route("/groups/:groupId").post(addUserToGroup);
 router.route("/num/:groupId/events").get(getEventNumFromGroup);
-router.route("/groups/:groupId/events").get(getAllEventFromGroup);
+router.route("/groups/:groupId/events").get(getAllEventFromAGroup);
 router.route("/num/:groupId/users").get(getNumUserFromGroup);
 router.route("/groups/:groupId/users").get(getAllUserFromGroup);
 module.exports = router;

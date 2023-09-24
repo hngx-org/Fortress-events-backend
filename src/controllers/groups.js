@@ -110,7 +110,7 @@ const deleteGroupMemberById = async (req, res) => {
 };
 
 // Get all events from a group by ID
-const getAllEventFromGroup = async (req, res) => {
+const getAllEventFromAGroup = async (req, res) => {
   try {
     const { groupId } = req.params;
     const group = await Group.findByPk(groupId, {
@@ -119,6 +119,9 @@ const getAllEventFromGroup = async (req, res) => {
         through: GroupEvent,
       },
     });
+    if (!group) {
+      throw new NotFoundError("Group not found");
+    }
     return res.status(200).json({ group });
   } catch (error) {
     console.error(`Error fetching events from group: ${error}`);
@@ -219,7 +222,7 @@ module.exports = {
   updateGroupDetails,
   deleteGroup,
   deleteGroupMemberById,
-  getAllEventFromGroup,
+  getAllEventFromAGroup,
   getAllUserFromGroup,
   addUserToGroup,
   getEventNumFromGroup,
