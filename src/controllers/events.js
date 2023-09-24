@@ -8,8 +8,7 @@ const {
 const { NotFoundError } = require("../errors");
 const express = require("express");
 const session = require("express-session");
-const { Op } = require('sequelize');
-
+const { Op } = require("sequelize");
 
 const createEvent = async (req, res) => {
   try {
@@ -17,7 +16,6 @@ const createEvent = async (req, res) => {
     try {
       if (!req.body.creator_id) {
         req.body.creator_id = req.session.user.id;
-
       }
     } catch (error) {
       console.log("you arent logged in");
@@ -25,10 +23,11 @@ const createEvent = async (req, res) => {
 
     const event = await Event.create({ ...req.body });
     const response = req.body;
+    console.log(req.body);
     if (event) {
-      if (req.body.group_Id) {
+      if (req.body.group_id) {
         const newGroupEvent = await GroupEvent.create({
-          group_id: req.body.group_Id,
+          group_id: req.body.group_id,
           event_id: event.id,
         });
       }
@@ -44,7 +43,6 @@ const getAllEvents = async (req, res) => {
   try {
     const events = await Event.findAll({
       where: {
-
         start_date: {
           [Op.gte]: new Date(), // Filter events with a start date greater than or equal to the current date
         },
@@ -54,7 +52,8 @@ const getAllEvents = async (req, res) => {
       // attributes: {
       //   exclude: [{ start_date: "null" }],
       // },
-
+      //get all users who are interested in the event
+      include: [{ model: User, through: { model: InterestedEvent } }],
     });
     res.status(200).json({ data: events });
   } catch (error) {
