@@ -25,8 +25,8 @@ router
   .delete(deleteGroup);
 router.route("/groupId/:userId").delete(deleteGroupMemberById);
 router.route("/groups/:groupId").post(addUserToGroup);
-router.route("/:groupId/events").get(getAllEventFromGroup);
-router.route("/:groupId/events/num").get(getEventNumFromGroup);
-router.route("/:groupId/users").get(getAllUserFromGroup);
-router.route("/:groupId/users/num").get(getNumUserFromGroup);
+router.route("/num/:groupId/events").get(getEventNumFromGroup);
+router.route("/groups/:groupId/events").get(getAllEventFromGroup);
+router.route("/num/:groupId/users").get(getNumUserFromGroup);
+router.route("/groups/:groupId/users").get(getAllUserFromGroup);
 module.exports = router;
