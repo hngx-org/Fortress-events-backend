@@ -8,6 +8,8 @@ const {
 const { NotFoundError } = require("../errors");
 const express = require("express");
 const session = require("express-session");
+const { Op } = require('sequelize');
+
 
 const createEvent = async (req, res) => {
   try {
@@ -15,7 +17,7 @@ const createEvent = async (req, res) => {
     try {
       if (!req.body.creator_id) {
         req.body.creator_id = req.session.user.id;
-        
+
       }
     } catch (error) {
       console.log("you arent logged in");
@@ -41,16 +43,23 @@ const createEvent = async (req, res) => {
 const getAllEvents = async (req, res) => {
   try {
     const events = await Event.findAll({
-      order: [["start_date", "DESC"]],
-      limit: 50,
-      attributes: {
-        exclude: [{ start_date: "null" }],
+      where: {
+
+        start_date: {
+          [Op.gte]: new Date(), // Filter events with a start date greater than or equal to the current date
+        },
       },
+      // order: [["created_at", "DESC"]],
+      limit: 50,
+      // attributes: {
+      //   exclude: [{ start_date: "null" }],
+      // },
+
     });
     res.status(200).json({ data: events });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ error });
   }
 };
 
