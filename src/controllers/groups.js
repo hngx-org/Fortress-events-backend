@@ -126,6 +126,27 @@ const getAllEventFromGroup = async (req, res) => {
   }
 };
 
+// Get events number from a group by ID
+const getEventNumFromGroup = async (req, res) => {
+  try {
+    const { groupId } = req.params;
+    const group = await Group.findByPk(groupId, {
+      include: {
+        model: Event,
+        through: GroupEvent,
+      },
+    });
+
+    // Get the number of events associated with the group
+    const numEvents = group.Events.length || 0;
+
+    return res.status(200).json({ numEvents });
+  } catch (error) {
+    console.error(`Error fetching events from group: ${error}`);
+    return res.status(500).json({ error: error.message });
+  }
+};
+
 // Get all users from a group by ID
 const getAllUserFromGroup = async (req, res) => {
   try {
@@ -137,6 +158,29 @@ const getAllUserFromGroup = async (req, res) => {
       },
     });
     return res.status(200).json({ users });
+  } catch (error) {
+    console.error(`Error fetching users from group: ${error}`);
+    return res.status(500).json({ error: error.message });
+  }
+};
+
+// Get all users from a group by ID
+const getNumUserFromGroup = async (req, res) => {
+  try {
+    const { groupId } = req.params;
+    const users = await Group.findByPk(groupId, {
+      include: {
+        model: User,
+        through: UserGroup,
+      },
+    });
+
+    if (users && users.Users) {
+      // Get the number of events associated with the group
+      var numUsers = users.Users.length ?? 0;
+    }
+
+    return res.status(200).json({ numUsers: numUsers });
   } catch (error) {
     console.error(`Error fetching users from group: ${error}`);
     return res.status(500).json({ error: error.message });
@@ -178,4 +222,6 @@ module.exports = {
   getAllEventFromGroup,
   getAllUserFromGroup,
   addUserToGroup,
+  getEventNumFromGroup,
+  getNumUserFromGroup,
 };
