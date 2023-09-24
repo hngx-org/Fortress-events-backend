@@ -9,6 +9,8 @@ const {
   getSingleEvent,
   updateEvent,
   deleteEvent,
+  getNumUserFromEvent,
+  getNumCommentForEvent,
 } = require("../controllers/events");
 
 router.route("/events").get(getAllEvents).post(createEvent);
@@ -20,4 +22,6 @@ router
   .delete(deleteEvent);
 
 router.route("/:userId/events").get(getAllEventsPerUserId);
+router.route("/:eventId/users").get(getNumUserFromEvent);
+router.route("/:eventId/numcomment").get(getNumCommentForEvent);
 module.exports = router;
