@@ -47,13 +47,13 @@ const getAllEvents = async (req, res) => {
           [Op.gte]: new Date(), // Filter events with a start date greater than or equal to the current date
         },
       },
-      // order: [["created_at", "DESC"]],
-      limit: 50,
+      order: [["created_at", "DESC"]],
+      // limit: 1000,
       // attributes: {
       //   exclude: [{ start_date: "null" }],
       // },
       //get all users who are interested in the event
-      include: [{ model: User, through: { model: InterestedEvent } }],
+      // include: [{ model: User, through: { model: InterestedEvent } }],
     });
     res.status(200).json({ data: events });
   } catch (error) {
