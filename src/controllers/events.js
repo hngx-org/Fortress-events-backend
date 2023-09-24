@@ -6,9 +6,21 @@ const {
   Comment,
 } = require("../model");
 const { NotFoundError } = require("../errors");
+const express = require("express");
+const session = require("express-session");
 
 const createEvent = async (req, res) => {
   try {
+    // check for creator_id is missing in the body and add it if there is req.session.user.id
+    try {
+      if (!req.body.creator_id) {
+        req.body.creator_id = req.session.user.id;
+        
+      }
+    } catch (error) {
+      console.log("you arent logged in");
+    }
+
     const event = await Event.create({ ...req.body });
     const response = req.body;
     if (event) {
