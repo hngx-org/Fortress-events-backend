@@ -158,12 +158,17 @@ const getEventComment = async (req, res) => {
       const commentImage = await CommentImage.findOne({
         where: { comment_id: comment.id },
       });
+      const commentUser = await User.findOne({
+        where: { id: comment.user_id },
+      });
+      console.log(commentUser);
 
       // Create the formatted comment object
       const formattedComment = {
         id: comment.id,
         body: comment.body,
-        // ... other comment properties you want to include
+        user: commentUser?.name,
+        avatar: commentUser?.avatar,
       };
 
       // If a matching CommentImage record is found, fetch the associated image URL
