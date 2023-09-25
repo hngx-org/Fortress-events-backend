@@ -1,5 +1,5 @@
 const { NotFoundError } = require("../errors");
-const { Event, Comment, CommentImage, Image } = require("../model");
+const { Event, Comment, CommentImage, Image, User } = require("../model");
 
 // Add Comments
 const addComment = async (req, res) => {
@@ -93,7 +93,7 @@ const getComment = async (req, res) => {
 
 // Get a single comment by comment ID with optional image URL
 const findCommentById = async (req, res) => {
-  const { commentId } = req.params;
+  const { commentId, userId } = req.params;
 
   try {
     // Fetch the comment by ID
@@ -107,12 +107,14 @@ const findCommentById = async (req, res) => {
     const commentImage = await CommentImage.findOne({
       where: { comment_id: comment.id },
     });
-
+    //get comment user
+    const commentUser = await User.findOne({ where: { id: comment.user_id } });
     // Create the formatted response
     const formattedComment = {
       id: comment.id,
       body: comment.body,
-      // ... other comment properties you want to include
+      user: commentUser.name,
+      avatar: commentUser.avatar,
     };
 
     // If a matching CommentImage record is found, fetch the associated image URL
