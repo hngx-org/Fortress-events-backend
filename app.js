@@ -12,6 +12,17 @@ const sequelize = require("./src/config/dbConfig");
 require("./src/model/index");
 app.use(logger("dev"));
 const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./swaggerConfig.js");
+
+var options = {
+  explorer: true,
+};
+
+app.use(
+  "/api-docs",
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerDocument, options)
+);
 const specs = require("./swaggerConfig");
 const notFound = require("./src/middlewares/not-found");
 
