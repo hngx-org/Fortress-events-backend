@@ -9,6 +9,7 @@ const { NotFoundError } = require("../errors");
 const express = require("express");
 const session = require("express-session");
 const { Op } = require("sequelize");
+const { sequelize } = require("../config/dbConfig");
 
 const createEvent = async (req, res) => {
   try {
@@ -22,6 +23,7 @@ const createEvent = async (req, res) => {
     }
 
     const event = await Event.create({ ...req.body });
+    console.log(req.body);
     const response = req.body;
     console.log(req.body);
     if (event) {
@@ -41,21 +43,40 @@ const createEvent = async (req, res) => {
 
 const getAllEvents = async (req, res) => {
   try {
-    const events = await Event.findAll({
-      where: {
-        start_date: {
-          [Op.gte]: new Date(), // Filter events with a start date greater than or equal to the current date
-        },
-      },
-      order: [["created_at", "DESC"]],
-      // limit: 1000,
-      // attributes: {
-      //   exclude: [{ start_date: "null" }],
-      // },
-      //get all users who are interested in the event
-      // include: [{ model: User, through: { model: InterestedEvent } }],
+    const events = await sequelize.query(
+      "SELECT events.*, GROUP_CONCAT(users.avatar) AS interested_users, COUNT(users.id) AS user_count FROM events JOIN interested_events ON events.id = interested_events.event_id JOIN users ON interested_events.user_id = users.id WHERE events.start_date >= DATE_SUB(NOW(), INTERVAL 1 MONTH) GROUP BY events.id, events.title",
+      { type: sequelize.QueryTypes.SELECT }
+    );
+
+    const remainingEvents = await sequelize.query(
+      "SELECT * FROM events WHERE events.id NOT IN (SELECT DISTINCT event_id FROM interested_events) AND events.start_date >= DATE_SUB(NOW(), INTERVAL 1 MONTH) ",
+      { type: sequelize.QueryTypes.SELECT }
+    );
+
+    const parse_events = events.map((event) => {
+      if (event.interested_users) {
+        event.interested_users = event.interested_users?.split(",");
+      } else {
+        event.interested_users = [];
+      }
+      return event;
     });
-    res.status(200).json({ data: events });
+
+    const parsed = remainingEvents.map((event) => {
+      if (event.interested_users) {
+        event.interested_users = event.interested_users?.split(",");
+      } else {
+        event.interested_users = [];
+      }
+      return event;
+    });
+
+    const allEvents = parse_events.concat(parsed);
+    allEvents.sort((a, b) => {
+      return new Date(b.created_at) - new Date(a.created_at);
+    });
+
+    res.status(200).json({ data: allEvents });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error });
