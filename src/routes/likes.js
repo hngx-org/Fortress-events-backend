@@ -11,19 +11,13 @@ const router = express.Router();
 
 /**
  * @swagger
- * /comments/likes:
+ * /api/comments/likes:
  *   post:
  *     summary: Create a new like for a comment
  *     description: Use this endpoint to create a new like for a comment.
  *     tags: [Likes]
  *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               // Define your like properties here
+ *       $ref: '#/components/requestBodies/LikeRequestBody'
  *     responses:
  *       '200':
  *         description: Like created successfully.
@@ -34,18 +28,40 @@ const router = express.Router();
  *     summary: Remove a like from a comment
  *     description: Use this endpoint to remove a like from a comment.
  *     tags: [Likes]
+ *     requestBody:
+ *       $ref: '#/components/requestBodies/LikeRequestBody'
  *     responses:
  *       '200':
  *         description: Like removed successfully.
  *       '500':
  *         description: Internal server error.
  */
+
+/**
+ * @swagger
+ * components:
+ *   requestBodies:
+ *     LikeRequestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               user_id:
+ *                 type: string
+ *                 description: The ID of the user who is creating/removing the like.
+ *               comment_id:
+ *                 type: string
+ *                 description: The ID of the comment to which the like is being added/removed.
+ */
+
 router.post("/comments/likes", createLike);
 router.delete("/comments/likes", removeLike);
 
 /**
  * @swagger
- * /comments/likes/{commentId}/{userId}:
+ * /api/comments/likes/{commentId}/{userId}:
  *   get:
  *     summary: Get a like for a comment by comment and user ID
  *     description: Use this endpoint to get a like for a comment by comment and user ID.

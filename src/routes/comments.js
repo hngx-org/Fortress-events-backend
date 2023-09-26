@@ -56,16 +56,9 @@ router
  * @swagger
  * /api/events/{eventId}/comments:
  *   post:
- *     summary: Add a comment to an event
- *     description: Use this endpoint to add a comment to an event.
+ *     summary: Add a new comment to an event
+ *     description: Use this endpoint to add a new comment to an event.
  *     tags: [Comments]
- *     parameters:
- *       - name: eventId
- *         in: path
- *         required: true
- *         schema:
- *           type: string
- *         description: The ID of the event.
  *     requestBody:
  *       required: true
  *       content:
@@ -73,14 +66,27 @@ router
  *           schema:
  *             type: object
  *             properties:
- *               comment:
+ *               body:
  *                 type: string
+ *                 description: The body text of the comment.
+ *               eventId:
+ *                 type: string
+ *                 description: The ID of the event to which the comment is added.
+ *               userId:
+ *                 type: string
+ *                 description: The ID of the user adding the comment.
+ *               imageUrl:
+ *                 type: string
+ *                 description: (Optional) URL of an image associated with the comment.
  *     responses:
- *       '200':
- *         description: Comment added successfully.
+ *       '201':
+ *         description: Comment created successfully.
+ *       '404':
+ *         description: Event not found.
  *       '500':
  *         description: Internal server error.
  */
+
 router.post("/events/:eventId/comments", addComment);
 
 /**

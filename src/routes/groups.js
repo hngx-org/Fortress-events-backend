@@ -25,7 +25,7 @@ const {
 
 /**
  * @swagger
- * /groups:
+ * /api/groups:
  *   post:
  *     summary: Create a new group
  *     description: Use this endpoint to create a new group.
@@ -37,7 +37,9 @@ const {
  *           schema:
  *             type: object
  *             properties:
- *               // Define your group properties here
+ *               title:
+ *                 type: string
+ *                 description: The title of the group.
  *     responses:
  *       '200':
  *         description: Group created successfully.
@@ -54,11 +56,12 @@ const {
  *       '500':
  *         description: Internal server error.
  */
+
 router.route("/groups").post(createGroup).get(getAllGroups);
 
 /**
  * @swagger
- * /groups/{groupId}:
+ * /api/groups/{groupId}:
  *   get:
  *     summary: Get group details by ID
  *     description: Use this endpoint to retrieve details of a group by its ID.
@@ -126,7 +129,7 @@ router
 
 /**
  * @swagger
- * /groups/{groupId}/users:
+ * /api/groups/{groupId}/users:
  *   delete:
  *     summary: Remove a user from a group by ID
  *     description: Use this endpoint to remove a user from a group by their ID.
@@ -148,7 +151,7 @@ router.route("/groupId/:userId").delete(deleteGroupMemberById);
 
 /**
  * @swagger
- * /groups/{groupId}/users:
+ * /api/groups/{groupId}/users:
  *   post:
  *     summary: Add a user to a group by ID
  *     description: Use this endpoint to add a user to a group by their ID.
@@ -170,7 +173,7 @@ router.route("/groups/:groupId").post(addUserToGroup);
 
 /**
  * @swagger
- * /groups/{groupId}/events/count:
+ * /api/groups/{groupId}/events/count:
  *   get:
  *     summary: Get the number of events in a group
  *     description: Use this endpoint to retrieve the number of events associated with a group.
@@ -192,7 +195,7 @@ router.route("/num/:groupId/events").get(getEventNumFromGroup);
 
 /**
  * @swagger
- * /groups/{groupId}/events:
+ * /api/groups/{groupId}/events:
  *   get:
  *     summary: Get all events in a group
  *     description: Use this endpoint to retrieve all events associated with a group.
@@ -214,7 +217,7 @@ router.route("/groups/:groupId/events").get(getAllEventFromAGroup);
 
 /**
  * @swagger
- * /groups/{groupId}/users/count:
+ * /api/groups/{groupId}/users/count:
  *   get:
  *     summary: Get the number of users in a group
  *     description: Use this endpoint to retrieve the number of users in a group.
@@ -236,7 +239,7 @@ router.route("/num/:groupId/users").get(getNumUserFromGroup);
 
 /**
  * @swagger
- * /groups/{groupId}/users:
+ * /api/groups/{groupId}/users:
  *   get:
  *     summary: Get all users in a group
  *     description: Use this endpoint to retrieve all users in a group.

@@ -16,7 +16,7 @@ const {
 
 /**
  * @swagger
- * /users/{id}:
+ * /api/users/{id}:
  *   put:
  *     summary: Update a user's profile by ID
  *     description: Use this endpoint to update a user's profile by their ID.
@@ -63,7 +63,7 @@ router.route("/users/:id").put(updateSingleUserProfile).get(getUser);
 
 /**
  * @swagger
- * /users:
+ * /api/users:
  *   get:
  *     summary: Get all users
  *     description: Use this endpoint to retrieve a list of all users.
@@ -85,7 +85,15 @@ router.route("/users/:id").put(updateSingleUserProfile).get(getUser);
  *           schema:
  *             type: object
  *             properties:
- *               // Define your user creation properties here
+ *               displayName:
+ *                 type: string
+ *                 description: The display name of the user.
+ *               email:
+ *                 type: string
+ *                 description: The email address of the user.
+ *               photoUrl:
+ *                 type: string
+ *                 description: The URL of the user's profile photo.
  *     responses:
  *       '200':
  *         description: User created successfully.
@@ -98,17 +106,6 @@ router.get("/", (req, res) => {
   res.send("you've got the wrong route but TEAM FORTRESS API is WORKING!!!");
 });
 
-/**
- * @swagger
- * /login:
- *   post:
- *     summary: Redirect to user listing after login
- *     description: Use this endpoint to redirect to the list of users after login.
- *     tags: [Users]
- *     responses:
- *       '302':
- *         description: Redirect to user listing.
- */
 router.post("/login", (req, res) => {
   res.redirect("/users");
 });
