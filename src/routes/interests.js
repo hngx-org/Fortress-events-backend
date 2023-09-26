@@ -15,7 +15,7 @@ const {
 
 /**
  * @swagger
- * /interest/{eventId}:
+ * /api/interest/{eventId}:
  *   get:
  *     summary: Get interests for an event
  *     description: Use this endpoint to retrieve interests for a specific event.
@@ -37,7 +37,7 @@ router.route("/interest/:eventId").get(getInterest);
 
 /**
  * @swagger
- * /users/{userId}/interest/{eventId}:
+ * /api/users/{userId}/interest/{eventId}:
  *   post:
  *     summary: Express interest in an event
  *     description: Use this endpoint to express interest in a specific event as a user.
@@ -84,6 +84,7 @@ router.route("/interest/:eventId").get(getInterest);
  *       '500':
  *         description: Internal server error.
  */
+
 router
   .route("/users/:userId/interest/:eventId")
   .post(expressInterest)

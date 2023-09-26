@@ -22,7 +22,7 @@ const {
 
 /**
  * @swagger
- * /events:
+ * /api/events:
  *   get:
  *     summary: Get all events
  *     description: Use this endpoint to retrieve a list of all events.
@@ -32,7 +32,6 @@ const {
  *         description: Events retrieved successfully.
  *       '500':
  *         description: Internal server error.
- *
  *   post:
  *     summary: Create a new event
  *     description: Use this endpoint to create a new event.
@@ -44,7 +43,34 @@ const {
  *           schema:
  *             type: object
  *             properties:
- *               // Define your event properties here
+ *               title:
+ *                 type: string
+ *                 description: The title of the event.
+ *               description:
+ *                 type: string
+ *                 description: A description of the event.
+ *               location:
+ *                 type: string
+ *                 description: The location of the event.
+ *               creator_id:
+ *                 type: string
+ *                 description: The ID of the event creator.
+ *               start_date:
+ *                 type: string
+ *                 description: The start date of the event.
+ *                 format: date
+ *               end_date:
+ *                 type: string
+ *                 description: The end date of the event.
+ *                 format: date
+ *               start_time:
+ *                 type: string
+ *                 description: The start time of the event.
+ *                 format: time
+ *               end_time:
+ *                 type: string
+ *                 description: The end time of the event.
+ *                 format: time
  *     responses:
  *       '200':
  *         description: Event created successfully.
@@ -55,7 +81,7 @@ router.route("/events").get(getAllEvents).post(createEvent);
 
 /**
  * @swagger
- * /events/{eventId}:
+ * /api/events/{eventId}:
  *   get:
  *     summary: Get a single event by ID
  *     description: Use this endpoint to retrieve a single event by its ID.
@@ -123,7 +149,7 @@ router
 
 /**
  * @swagger
- * /{userId}/events:
+ * /api/{userId}/events:
  *   get:
  *     summary: Get all events for a user
  *     description: Use this endpoint to retrieve all events associated with a user by their ID.
@@ -145,7 +171,7 @@ router.route("/:userId/events").get(getAllEventsPerUserId);
 
 /**
  * @swagger
- * /{eventId}/users:
+ * /api/{eventId}/users:
  *   get:
  *     summary: Get the number of users for an event
  *     description: Use this endpoint to retrieve the number of users participating in an event.
@@ -167,7 +193,7 @@ router.route("/:eventId/users").get(getNumUserFromEvent);
 
 /**
  * @swagger
- * /{eventId}/numcomment:
+ * /api/{eventId}/numcomment:
  *   get:
  *     summary: Get the number of comments for an event
  *     description: Use this endpoint to retrieve the number of comments associated with an event.
